@@ -1,0 +1,1278 @@
+<!doctype html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Swadhyaya Impact Assessment Quiz</title>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="keywords"
+	content="bootstrap, bootstrap admin template, admin theme, admin dashboard, dashboard template, admin template, responsive" />
+<meta name="author" content="Codedthemes" />
+<!-- Favicon -->
+<link rel="icon" th:href="@{/favicon.ico}"></link>
+<!-- Required Fremwork -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{assets/css/bootstrap/css/bootstrap.min.css}" />
+
+<!-- themify icon -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{assets/icon/themify-icons/themify-icons.css}" />
+<!-- font-awesome-n -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{assets/css/font-awesome-n.min.css}" />
+<link rel="stylesheet" type="text/css"
+	th:href="@{assets/css/font-awesome.min.css}" />
+<!-- scrollbar.css -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{assets/css/jquery.mCustomScrollbar.css}" />
+<!-- Style.css -->
+<link rel="stylesheet" type="text/css" th:href="@{assets/css/style.css}" />
+<!-- Select2.css -->
+<link th:href="@{/css/select2.min.css}" rel="stylesheet" />
+<!-- template.css for form design -->
+<link th:href="@{/css/template.css}" rel=" stylesheet" />
+<!-- template.css for form design -->
+<link th:href="@{/css/alertStyle.css}" rel=" stylesheet" />
+<!-- Datatables  CSS -->
+<link rel="stylesheet" th:href="@{/css/jquery.dataTables.min.css}" />
+<link rel="stylesheet" th:href="@{/css/buttons.dataTables.min.css}" />
+<link rel="stylesheet" th:href="@{/css/select.dataTables.min.css}" />
+<!-- Required Jquery -->
+<style>
+#footerid {
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	text-align: center;
+	background-color: white;
+	color: black;
+}
+</style>
+<style>
+#pageloader {
+	position: fixed;
+	width: 100%;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	background-color: rgba(255, 255, 255, 0.7);
+	z-index: 9999;
+	display: none;
+}
+
+@
+-webkit-keyframes spin {
+	from {-webkit-transform: rotate(0deg);
+}
+
+to {
+	-webkit-transform: rotate(360deg);
+}
+
+}
+@
+keyframes spin {
+	from {transform: rotate(0deg);
+}
+
+to {
+	transform: rotate(360deg);
+}
+
+}
+#pageloader::after {
+	content: '';
+	display: block;
+	position: absolute;
+	left: 48%;
+	top: 40%;
+	width: 40px;
+	height: 40px;
+	border-style: solid;
+	border-color: black;
+	border-top-color: transparent;
+	border-width: 4px;
+	border-radius: 50%;
+	-webkit-animation: spin .8s linear infinite;
+	animation: spin .8s linear infinite;
+}
+</style>
+</head>
+<body>
+	<div id="pageloader"></div>
+	<div>
+		<div th:replace="../includes/preLoader :: preLoader"></div>
+		<div id="pcoded" class="pcoded">
+			<div class="pcoded-overlay-box"></div>
+			<div class="pcoded-container navbar-wrapper">
+				<nav th:replace="../includes/emp_details :: emp_details"></nav>
+				<div class="pcoded-main-container">
+					<div class="pcoded-wrapper">
+						<nav th:replace="../includes/menuBar :: menuBar"></nav>
+						<div class="pcoded-content">
+							<div class="pcoded-inner-content">
+								<!-- Main-body start -->
+								<div class="main-body">
+									<div class="page-wrapper">
+										<!-- Page-body start -->
+										<div class="page-body">
+											<div class="row">
+												<div class="col-xl-1 col-md-1"></div>
+												<div class="col-xl-10 col-md-10">
+													<div id="sucessMsg" th:if="${message!=null}"
+														class="alert
+														success" th:inline="text">
+														<span class="closebtn"
+															onclick="this.parentElement.style.display='none';">&times;</span>
+														<strong></strong> [[${message}]]!
+													</div>
+													<div id="errMsg" th:if="${errorMsg!=null}" class="alert"
+														th:inline="text">
+														<span class="closebtn"
+															onclick="this.parentElement.style.display='none';">&times;</span>
+														<strong></strong> [[${errorMsg}]]!
+													</div>
+													<div class="card">
+														<form id="submit_form" name="submit_form"
+															th:action="@{/createEvent}" method="post"
+															onsubmit="return validate()">
+															<div class="card-header">
+																<h4 style="text-align: center;">Quiz Event</h4>
+															</div>
+															<div class="card-body">
+																<div class="form-row">
+																	<div class="form-group col-md-2">Event Name</div>
+																	<div class="form-group col-md-10">
+																		<input id="event_name" name="event_name"
+																			class="form-Input" type="text" required="required" />
+																	</div>
+																	<div class="form-group col-md-2">Event Valid From</div>
+																	<div class="form-group col-md-4">
+																		<input type="datetime-local" id="startDate"
+																			name="startDate">
+																	</div>
+																	<div class="form-group col-md-2">Event Valid Till</div>
+																	<div class="form-group col-md-4">
+																		<input type="datetime-local" id="endDate"
+																			name="endDate">
+																	</div>
+																	<div class="form-group col-md-2">No. Of Questions</div>
+																	<div class="form-group col-md-4">
+																		<input id="no_of_questions" class="form-Input"
+																			type="number" name="no_of_questions"
+																			required="required" />
+																	</div>
+																	<div class="form-group col-md-2">Quiz Duration
+																		(in minutes)</div>
+																	<div class="form-group col-md-4">
+																		<input id="quiz_duration" name="quiz_duration"
+																			class="form-Input" type="number" required="required" />
+																	</div>
+																	<div class="form-group col-md-2"></div>
+																	<div class="form-group col-md-10">
+																		<span>Dear Sir/Ma'am,</span>
+																	</div>
+																	<div class="form-group col-md-2">Mail Body</div>
+																	<div class="form-group col-md-10">
+																		<textarea name="remarks" cols="20" rows="3"
+																			style="width: -webkit-fill-available;" id="remarks"></textarea>
+																	</div>
+																	<div class="form-group col-md-2"></div>
+																	<div class="form-group col-md-10">
+																		<span>Regards<br>Swadhyaya Impact
+																			Assessment Team
+																		</span>
+																	</div>
+
+																	<div class="form-group col-md-12">
+																		<h6 style="text-align: left;">Modules</h6>
+																	</div>
+																	<div class="form-group col-md-2">Division</div>
+																	<div class="form-group col-md-4">
+																		<select class="js-example-basic-single form-select"
+																			id="division_list" onchange="fetch_domain()">
+																			<option selected="selected" disabled="disabled"
+																				value="">----Select----</option>
+																			<option value="All">All</option>
+																			<option th:each="division : ${division_list}"
+																				th:value="${division}" th:text="${division}"></option>
+																		</select>
+																	</div>
+																	<div class="form-group col-md-2">Domain</div>
+																	<div class="form-group col-md-4">
+																		<select class="js-example-basic-single form-select"
+																			id="domain_list" onchange="fetch_sub_domain()">
+																			<option selected="selected" disabled="disabled"
+																				value="">----Select----</option>
+																		</select>
+																	</div>
+																	<div class="form-group col-md-2">Sub Domain</div>
+																	<div class="form-group col-md-4">
+																		<select class="js-example-basic-single form-select"
+																			id="sub_domain_list">
+																			<option selected="selected" disabled="disabled"
+																				value="">----Select----</option>
+																		</select> &nbsp;&nbsp;
+																		<button type="button" class="btn btn-warning"
+																			style="font-size: inherit;"
+																			onclick="fetch_module_list();">Fetch Modules</button>
+																	</div>
+																	<div class="form-group col-md-12">
+																		<h6 style="text-align: center;">OR</h6>
+																	</div>
+
+																	<div class="form-group col-md-2">Upload Module</div>
+																	<div class="form-group col-md-10">
+																		<input id="module_csv_file" name="module_csv_file"
+																			class="form-Input" type="file" />&nbsp;&nbsp;
+																		<button type="button" class="btn btn-warning"
+																			style="font-size: inherit;"
+																			onclick="upload_modules();">Upload Modules</button>
+																	</div>
+																	<div class="form-group col-md-2"></div>
+																	<div class="form-group col-md-10">
+																		<a th:href="@{/ModuleUploadTemplate}" class=""
+																			style="font-size: 12px; color: #03a6d6; text-decoration: underline">(Click
+																			here to download Template for Module Upload)</a>
+																	</div>
+																	<div class="form-group col-md-12 table-responsive">
+																		<table
+																			class="table table-bordered table-striped table-sm"
+																			id="module_dataTable" style="width: 100%">
+																			<thead>
+																				<tr>
+																					<th>Select &nbsp;<input type="checkbox"
+																						onclick="selectAllModules(this)" /></th>
+																					<th>Division</th>
+																					<th>Domain</th>
+																					<th>Sub Domain</th>
+																					<th>Activity Code</th>
+																					<th>Activity Name</th>
+
+																				</tr>
+																			</thead>
+																			<tbody>
+																			</tbody>
+																		</table>
+																	</div>
+																	<div id="module_error_heading" style="display: none;"
+																		class="form-group col-md-12">
+																		<h6 style="text-align: left; color: red;">Following
+																			module data could not be uploaded</h6>
+																	</div>
+																	<div id="module_error_table" style="display: none;"
+																		class="form-group col-md-12 table-responsive">
+																		<table class="table table-bordered table-sm"
+																			id="module_error_dataTable" style="width: 100%">
+																			<thead>
+																				<tr>
+
+																					<th>Activity Code</th>
+																					<th>Error</th>
+
+																				</tr>
+																			</thead>
+																			<tbody>
+																			</tbody>
+																		</table>
+																	</div>
+
+																	<div class="form-group col-md-12">
+																		<h6 style="text-align: left;">Quiz Participants</h6>
+																	</div>
+																	<div class="form-group col-md-2">Division</div>
+																	<div class="form-group col-md-4">
+																		<select class="js-example-basic-single form-select"
+																			id="admin_division_list"
+																			onchange="fetch_company_code()">
+																			<option selected="selected" disabled="disabled"
+																				value="">----Select----</option>
+																			<option th:each="division : ${admin_division_list}"
+																				th:value="${division[0]}" th:text="${division[1]}"></option>
+																		</select>
+																	</div>
+																	<div class="form-group col-md-2">Company Code</div>
+																	<div class="form-group col-md-4">
+																		<select class="js-example-basic-single form-select"
+																			id="company_code_list"
+																			onchange="fetch_location_code()">
+																			<option selected="selected" disabled="disabled"
+																				value="">----Select----</option>
+																		</select>
+																	</div>
+																	<div class="form-group col-md-2">Location</div>
+																	<div class="form-group col-md-4">
+																		<select class="js-example-basic-single form-select"
+																			id="location_code_list" onchange="fetch_psa()">
+																			<option selected="selected" disabled="disabled"
+																				value="">----Select----</option>
+
+																		</select>
+																	</div>
+																	<div class="form-group col-md-2">Department</div>
+																	<div class="form-group col-md-4">
+																		<select class="js-example-basic-single form-select"
+																			id="psa_code_list" onchange="fetch_emp_code()">
+																			<option selected="selected" disabled="disabled"
+																				value="">----Select----</option>
+																		</select>&nbsp;&nbsp;
+
+																	</div>
+																	<div class="form-group col-md-5"></div>
+																	<div class="form-group col-md-4">
+																		<!-- 																		<select class="js-example-basic-single form-select" -->
+																		<!-- 																			id="emp_code_list"> -->
+																		<!-- 																			<option selected="selected" disabled="disabled" -->
+																		<!-- 																				value="">----Select----</option> -->
+
+																		<!-- 																		</select>&nbsp;&nbsp; -->
+																		<button type="button" class="btn btn-warning"
+																			style="font-size: inherit;"
+																			onclick="fetch_employee_list();">Fetch
+																			Employees</button>
+																	</div>
+																	<div class="form-group col-md-12">
+																		<h6 style="text-align: center;">OR</h6>
+																	</div>
+																	<div class="form-group col-md-2">Upload Employees</div>
+																	<div class="form-group col-md-10">
+																		<input id="employee_csv_file" name="employee_csv_file"
+																			class="form-Input" type="file" />&nbsp;&nbsp;
+																		<button type="button" class="btn btn-warning"
+																			style="font-size: inherit;"
+																			onclick="upload_employees();">Upload
+																			Employees</button>
+																	</div>
+																	<div class="form-group col-md-2"></div>
+																	<div class="form-group col-md-10">
+																		<a th:href="@{/EmployeeUploadTemplate}" class=""
+																			style="font-size: 12px; color: #03a6d6; text-decoration: underline">(Click
+																			here to download Template for Employee Upload)</a>
+																	</div>
+																	<div class="form-group col-md-12 table-responsive">
+																		<table
+																			class="table table-bordered table-striped table-sm"
+																			id="employee_dataTable" style="width: 100%">
+																			<thead>
+																				<tr>
+																					<th>Select &nbsp;<input type="checkbox"
+																						onclick="selectAllEmployees(this)" /></th>
+																					<th>Employee Code</th>
+																					<th>Name</th>
+																					<th>Department</th>
+																					<th>Designation</th>
+																					<th>Location</th>
+																					<th>Email</th>
+																					<th>Mobile No</th>
+
+																				</tr>
+																			</thead>
+																			<tbody>
+																			</tbody>
+																		</table>
+																	</div>
+																	<div id="employee_error_heading" style="display: none;"
+																		class="form-group col-md-12">
+																		<h6 style="text-align: left; color: red;">Following
+																			employee data could not be uploaded</h6>
+																	</div>
+																	<div id="employee_error_table" style="display: none;"
+																		class="form-group col-md-12 table-responsive">
+																		<table class="table table-bordered  table-sm"
+																			id="employee_error_dataTable" style="width: 100%">
+																			<thead>
+																				<tr>
+
+																					<th>Activity Code</th>
+																					<th>Error</th>
+
+																				</tr>
+																			</thead>
+																			<tbody>
+																			</tbody>
+																		</table>
+																	</div>
+																	<div class="form-group col-md-12 text-center">
+																		<input type="hidden" id="employeeArray"
+																			name="employeeArray" /> <input type="hidden"
+																			id="moduleArray" name="moduleArray" />
+																		<button type="submit" class="btn btn-warning"
+																			style="font-size: inherit;">Create Event</button>
+																	</div>
+																</div>
+															</div>
+														</form>
+													</div>
+												</div>
+												<div class="col-xl-1 col-md-1"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="footer-div">
+			<div th:replace="../includes/footer :: footer"></div>
+		</div>
+	</div>
+	<script type="text/javascript"
+		th:src="@{assets/js/jquery/jquery.min.js}"></script>
+	<script type="text/javascript"
+		th:src="@{assets/js/jquery-ui/jquery-ui.min.js} "></script>
+	<script type="text/javascript"
+		th:src="@{assets/js/popper.js/popper.min.js}"></script>
+	<script type="text/javascript"
+		th:src="@{assets/js/bootstrap/js/bootstrap.min.js} "></script>
+	<script th:src="@{/js/select2.min.js}"></script>
+	<!-- jquery slimscroll js -->
+	<script type="text/javascript"
+		th:src="@{assets/js/jquery-slimscroll/jquery.slimscroll.js}"></script>
+
+	<!-- slimscroll js -->
+	<script th:src="@{assets/js/jquery.mCustomScrollbar.concat.min.js} "></script>
+
+	<!-- menu js -->
+	<script th:src="@{assets/js/pcoded.min.js}"></script>
+	<script th:src="@{assets/js/vertical/vertical-layout.min.js} "></script>
+	<script type="text/javascript" th:src="@{assets/js/script.js} "></script>
+	<!-- Datatable js -->
+	<script th:src="@{/js/jquery.dataTables.min.js}" type="text/javascript"></script>
+	<script th:src="@{/js/dataTables.buttons.min.js}"
+		type="text/javascript"></script>
+	<script th:src="@{/js/buttons.flash.min.js}" type="text/javascript"></script>
+	<script th:src="@{/js/jszip.min.js}" type="text/javascript"></script>
+	<script th:src="@{/js/pdfmake.min.js}" type="text/javascript"></script>
+	<script th:src="@{/js/vfs_fonts.js}" type="text/javascript"></script>
+	<script th:src="@{/js/buttons.html5.min.js}" type="text/javascript"></script>
+	<script th:src="@{/js/buttons.print.min.js}" type="text/javascript"></script>
+	<script th:src="@{/js/jspdf.js}"></script>
+	<script th:src="@{/js/dataTables.select.min.js}"></script>
+	<script th:inline="javascript">
+		function adjust(v) {
+			if (v > 9) {
+				return v.toString();
+			} else {
+				return '0' + v.toString();
+			}
+		}
+		$(document).ready(
+				function() {
+					$('.js-example-basic-single').select2();
+
+					setTimeout(function() {
+						$('#sucessMsg').fadeOut('fast');
+					}, 2000);
+
+					setTimeout(function() {
+						$('#errMsg').fadeOut('fast');
+					}, 2000);
+
+					var today = new Date();
+					var date = today.getFullYear() + '-'
+							+ adjust(today.getMonth() + 1) + '-'
+							+ adjust(today.getDate());
+					var time = adjust(today.getHours()) + ":"
+							+ adjust(today.getMinutes());
+					var dateTime = `${date}T${time}`;
+					// 					alert(dateTime);
+					$("#startDate").val(dateTime);
+					$("#endDate").val(dateTime);
+
+					document.getElementById("startDate").setAttribute("min",
+							dateTime);
+					document.getElementById("endDate").setAttribute("min",
+							dateTime);
+
+					$('#module_dataTable').DataTable({
+						"scrollY" : "200px",
+						"scrollCollapse" : true,
+						"paging" : false,
+						dom : 'Bfrtip',
+						buttons : [ 'copy', 'csv', 'excel', 'print' ]
+					});
+					$('#employee_dataTable').DataTable({
+						"scrollY" : "200px",
+						"scrollCollapse" : true,
+						"paging" : false,
+						dom : 'Bfrtip',
+						buttons : [ 'copy', 'csv', 'excel', 'print' ],
+					// 						columnDefs : [ {
+					// 							orderable : false,
+					// 							className : 'select-checkbox',
+					// 							targets : 0
+					// 						} ],
+					// 						select : {
+					// 							style : 'multi',
+					// 							selector : 'td:first-child'
+					// 						},
+					// 						order : [ [ 1, 'asc' ] ]
+					});
+					$('#module_error_dataTable').DataTable({
+						"searching" : false,
+						"info" : false,
+						"paging" : false,
+					});
+					$('#employee_error_dataTable').DataTable({
+						"searching" : false,
+						"scrollCollapse" : true,
+						"paging" : false,
+					});
+
+				});
+
+		function selectAllModules(x) {
+
+			if ($(x).prop("checked") == true) {
+				// 				$("#module_dataTable tbody").find(
+				// 						'input[name="module_checkbox"]').each(function() {
+				// 					$(this).prop('checked', true);
+				// 				});
+
+				$('.module_checkbox').prop('checked', true);
+
+			} else if ($(x).prop("checked") == false) {
+				// 				$("#module_dataTable tbody").find(
+				// 						'input[name="module_checkbox"]').each(function() {
+				// 					$(this).prop('checked', false);
+				// 				});
+				$('.module_checkbox').prop('checked', false);
+
+			}
+
+		}
+
+		function selectAllEmployees(x) {
+
+			if ($(x).prop("checked") == true) {
+				// 				$("#employee_dataTable tbody").find(
+				// 						'input[name="employee_checkbox"]').each(function() {
+				// 					$(this).prop('checked', true);
+				// 				});
+				$('.employee_checkbox').prop('checked', true);
+
+			} else if ($(x).prop("checked") == false) {
+				// 				$("#employee_dataTable tbody").find(
+				// 						'input[name="employee_checkbox"]').each(function() {
+				// 					$(this).prop('checked', false);
+				// 				});
+				$('.employee_checkbox').prop('checked', false);
+
+			}
+
+		}
+
+		function fetch_domain() {
+
+			/*<![CDATA[*/
+
+			$
+					.ajax({
+						url : "fecthDomainList",
+						method : "post",
+						async : false,
+						data : {
+							// 							search_criteria : $('#criteria_dropdown').val(),
+							division : $('#division_list').val()
+						},
+						success : function(data) {
+							if (data != null && data != '') {
+								var html = '<option disabled="disabled" value=""  selected="selected">-------Select--------</option><option value="All">All</option>';
+								data.forEach(function(dataItem) {
+									html += '<option value="' + dataItem + '">'
+											+ dataItem + '</option>';
+								});
+								$('#domain_list').html(html);
+
+								var html = '<option disabled="disabled" value=""  selected="selected">-------Select--------</option>';
+								$('#sub_domain_list').html(html);
+								// 								alert("Domain list populated. Please select domain from the dropdown");
+
+							} else {
+								alert("Domain not available");
+								var html = '<option disabled="disabled" value=""  selected="selected">-------Select--------</option>';
+								$('#domain_list').html(html);
+							}
+
+						},
+						error : function(e) {
+							alert("Error occured");
+							return;
+						}
+
+					});
+			/*]]>*/
+
+		}
+
+		function fetch_sub_domain() {
+
+			/*<![CDATA[*/
+
+			$
+					.ajax({
+						url : "fecthSubDomainList",
+						method : "post",
+						async : false,
+						data : {
+							// 							search_criteria : $('#criteria_dropdown').val(),
+							division : $('#division_list').val(),
+							domain : $('#domain_list').val()
+						},
+						success : function(data) {
+							if (data != null && data != '') {
+								var html = '<option value="All"  selected="selected">All</option>';
+								data.forEach(function(dataItem) {
+									html += '<option value="' + dataItem + '">'
+											+ dataItem + '</option>';
+								});
+								$('#sub_domain_list').html(html);
+								// 								fetch_employee_details();
+								// 								alert("Sub Domain list populated. Please select sub domain from the dropdown");
+							} else {
+								alert("Sub Domain not available");
+								var html = '<option disabled="disabled" value=""  selected="selected">-------Select--------</option>';
+								$('#sub_domain_list').html(html);
+							}
+
+						},
+						error : function(e) {
+							alert("Error occured");
+							return;
+						}
+
+					});
+			/*]]>*/
+
+		}
+		function fetch_module_list() {
+
+			if ($('#division_list').val() == null) {
+				alert("Please select division");
+				return false;
+			}
+
+			if ($('#domain_list').val() == null) {
+				alert("Please select domain");
+				return false;
+			}
+
+			if ($('#sub_domain_list').val() == null) {
+				alert("Please select sub domain");
+				return false;
+			}
+
+			var dataTable = $('#module_dataTable').DataTable();
+			dataTable.clear().draw();
+
+			$("#pageloader").fadeIn();
+			/*<![CDATA[*/
+
+			$
+					.ajax({
+						url : "fecthModuleList",
+						method : "post",
+						async : false,
+						data : {
+							// 							search_criteria : $('#criteria_dropdown').val(),
+							division : $('#division_list').val(),
+							domain : $('#domain_list').val(),
+							sub_domain : $('#sub_domain_list').val()
+						},
+
+						success : function(data) {
+							$("#pageloader").fadeOut();
+							if (data != null && data != '') {
+								data
+										.forEach(function(dataItem) {
+											dataTable.row
+													.add([
+															'<input type="checkbox" class="module_checkbox"/>',
+															dataItem.division,
+															dataItem.domain,
+															dataItem.sub_domain,
+															dataItem.activity_code,
+															dataItem.activity_name ]);
+										});
+
+								dataTable.draw()
+							} else {
+								alert("Module not available");
+							}
+
+						},
+						error : function(e) {
+							alert("Error occured");
+							return;
+						}
+
+					});
+			/*]]>*/
+
+		}
+
+		function fetch_company_code() {
+
+			/*<![CDATA[*/
+
+			$
+					.ajax({
+						url : "fecthCompanyCodeList",
+						method : "post",
+						async : false,
+						data : {
+							// 							search_criteria : $('#criteria_dropdown').val(),
+							division : $('#admin_division_list').val()
+						},
+						success : function(data) {
+							if (data != null && data != '') {
+								var html = '<option disabled="disabled" value=""  selected="selected">-------Select--------</option><option value="All">All</option>';
+								data
+										.forEach(function(dataItem) {
+											html += '<option value="' + dataItem[0] + '">'
+													+ dataItem[1]
+													+ '('
+													+ dataItem[0]
+													+ ')'
+													+ '</option>';
+										});
+								$('#company_code_list').html(html);
+
+								var html = '<option disabled="disabled" value=""  selected="selected">-------Select--------</option>';
+								$('#location_code_list').html(html);
+								$('#psa_code_list').html(html);
+								// 								$('#emp_code_list').html(html);
+								// 								alert("Company Code list populated. Please select company code from the dropdown");
+
+							} else {
+								alert("Company Code not available");
+								var html = '<option disabled="disabled" value=""  selected="selected">-------Select--------</option>';
+								$('#company_code_list').html(html);
+							}
+
+						},
+						error : function(e) {
+							alert("Error occured");
+							return;
+						}
+
+					});
+			/*]]>*/
+
+		}
+		function fetch_location_code() {
+
+			/*<![CDATA[*/
+
+			$
+					.ajax({
+						url : "fecthLocationCodeList",
+						method : "post",
+						async : false,
+						data : {
+							// 							search_criteria : $('#criteria_dropdown').val(),
+							division : $('#admin_division_list').val(),
+							company_code : $('#company_code_list').val()
+						},
+						success : function(data) {
+							if (data != null && data != '') {
+								var html = '<option disabled="disabled" value=""  selected="selected">-------Select--------</option><option value="All">All</option>';
+								data
+										.forEach(function(dataItem) {
+											html += '<option value="' + dataItem[0] + '">'
+													+ dataItem[1]
+													+ '('
+													+ dataItem[0]
+													+ ')'
+													+ '</option>';
+										});
+								$('#location_code_list').html(html);
+
+								var html = '<option disabled="disabled" value=""  selected="selected">-------Select--------</option>';
+								$('#psa_code_list').html(html);
+								// 								$('#emp_code_list').html(html);
+								// 								alert("Location list populated. Please select location from the dropdown");
+
+							} else {
+								alert("Location not available");
+								var html = '<option disabled="disabled" value=""  selected="selected">-------Select--------</option>';
+								$('#location_code_list').html(html);
+							}
+
+						},
+						error : function(e) {
+							alert("Error occured");
+							return;
+						}
+
+					});
+			/*]]>*/
+
+		}
+		function fetch_psa() {
+
+			/*<![CDATA[*/
+
+			$
+					.ajax({
+						url : "fecthPsaCodeList",
+						method : "post",
+						async : false,
+						data : {
+							// 							search_criteria : $('#criteria_dropdown').val(),
+							division : $('#admin_division_list').val(),
+							company_code : $('#company_code_list').val(),
+							loc_code : $('#location_code_list').val()
+						},
+						success : function(data) {
+							if (data != null && data != '') {
+								var html = '<option disabled="disabled" value=""  selected="selected">-------Select--------</option><option value="All">All</option>';
+								data
+										.forEach(function(dataItem) {
+											html += '<option value="' + dataItem[0] + '">'
+													+ dataItem[1]
+													+ '('
+													+ dataItem[0]
+													+ ')'
+													+ '</option>';
+										});
+								$('#psa_code_list').html(html);
+
+								var html = '<option disabled="disabled" value=""  selected="selected">-------Select--------</option>';
+								// 								$('#emp_code_list').html(html);
+								// 								alert("Department list populated. Please select department from the dropdown");
+
+							} else {
+								alert("Department not available");
+								var html = '<option disabled="disabled" value=""  selected="selected">-------Select--------</option>';
+								$('#psa_code_list').html(html);
+							}
+
+						},
+						error : function(e) {
+							alert("Error occured");
+							return;
+						}
+
+					});
+			/*]]>*/
+
+		}
+
+		function fetch_emp_code() {
+
+			/*<![CDATA[*/
+
+			$
+					.ajax({
+						url : "fecthEmpCodeList",
+						method : "post",
+						async : false,
+						data : {
+							// 							search_criteria : $('#criteria_dropdown').val(),
+							division : $('#admin_division_list').val(),
+							company_code : $('#company_code_list').val(),
+							loc_code : $('#location_code_list').val(),
+							psa_code : $('#psa_code_list').val()
+						},
+						success : function(data) {
+							if (data != null && data != '') {
+								var html = '<option disabled="disabled" value=""  selected="selected">-------Select--------</option><option value="All">All</option>';
+								data
+										.forEach(function(dataItem) {
+											html += '<option value="' + dataItem[0] + '">'
+													+ dataItem[1]
+													+ '('
+													+ dataItem[0]
+													+ ')'
+													+ '</option>';
+										});
+								$('#emp_code_list').html(html);
+
+								// 								alert("Employee list populated. Please select department from the dropdown");
+
+							} else {
+								alert("Employee not available");
+								var html = '<option disabled="disabled" value=""  selected="selected">-------Select--------</option>';
+								$('#emp_code_list').html(html);
+							}
+
+						},
+						error : function(e) {
+							alert("Error occured");
+							return;
+						}
+
+					});
+			/*]]>*/
+
+		}
+
+		function fetch_employee_list() {
+
+			if ($('#admin_division_list').val() == null) {
+				alert("Please select division");
+				return false;
+			}
+
+			if ($('#company_code_list').val() == null) {
+				alert("Please select company code");
+				return false;
+			}
+
+			if ($('#location_code_list').val() == null) {
+				alert("Please select location");
+				return false;
+			}
+			if ($('#psa_code_list').val() == null) {
+				alert("Please select department");
+				return false;
+			}
+			// 			if ($('#emp_code_list').val() == null) {
+			// 				alert("Please select employee");
+			// 				return false;
+			// 			}
+
+			$("#pageloader").fadeIn();
+
+			var dataTable = $('#employee_dataTable').DataTable();
+			dataTable.clear().draw();
+
+			/*<![CDATA[*/
+
+			$
+					.ajax({
+						url : "fecthEmployeeList",
+						method : "post",
+						async : false,
+						data : {
+							// 							search_criteria : $('#criteria_dropdown').val(),
+							division : $('#admin_division_list').val(),
+							company_code : $('#company_code_list').val(),
+							loc_code : $('#location_code_list').val(),
+							psa_code : $('#psa_code_list').val()
+						// 							emp_code : $('#emp_code_list').val()
+						},
+
+						success : function(data) {
+							$("#pageloader").fadeOut();
+							if (data != null && data != '') {
+								data
+										.forEach(function(dataItem) {
+											dataTable.row
+													.add([
+															'<input type="checkbox"  class="employee_checkbox"/>',
+															dataItem.emp_code,
+															dataItem.emp_name,
+															dataItem.psa,
+															dataItem.design_short_desc,
+															dataItem.pa,
+															dataItem.email_id,
+															dataItem.mobile_no ]);
+										});
+								dataTable.draw();
+							} else {
+								alert("Module not available");
+							}
+
+						},
+						error : function(e) {
+							alert("Error occured");
+							return;
+						}
+
+					});
+			/*]]>*/
+
+		}
+
+		function endsWith(str, suffix) {
+			return str.indexOf(suffix, str.length - suffix.length) !== -1;
+		}
+
+		function upload_modules() {
+
+			if ($('#module_csv_file').val() == "") {
+				alert("Please upload csv file");
+				return;
+			}
+
+			if (!$('#module_csv_file').val() == "") {
+				if (!endsWith($('#module_csv_file')[0].files[0].name, 'csv')) {
+					alert($('#module_csv_file')[0].files[0].name
+							+ " is not a valid csv file!");
+					return;
+				}
+				var size = $('#module_csv_file')[0].files[0].size;
+				if (size > 5120000) {
+					alert("CSV file  should be less than 5 MB");
+					return;
+				}
+			}
+
+			var form = $('#submit_form')[0];
+			var formdata = new FormData(form);
+
+			var dataTable = $('#module_dataTable').DataTable();
+			dataTable.clear().draw();
+
+			var error_dataTable = $('#module_error_dataTable').DataTable();
+			error_dataTable.clear().draw();
+
+			$("#pageloader").fadeIn();
+
+			/*<![CDATA[*/
+
+			$
+					.ajax({
+						url : "checkModuleFile",
+						method : "post",
+						async : false,
+						data : formdata,
+						enctype : 'multipart/form-data',
+						processData : false,
+						contentType : false,
+						cache : false,
+
+						success : function(data) {
+							$("#pageloader").fadeOut();
+							if (data != null && data.error_msg == null) {
+								data.mstActivityListModel
+										.forEach(function(dataItem) {
+											dataTable.row
+													.add([
+															'<input type="checkbox" checked="checked" class="module_checkbox"/>',
+															dataItem.division,
+															dataItem.domain,
+															dataItem.sub_domain,
+															dataItem.activity_code,
+															dataItem.activity_name ]);
+										});
+								dataTable.draw();
+
+								if (data.error_records != null) {
+									data.error_records.forEach(function(
+											dataItem) {
+										error_dataTable.row.add([ dataItem[0],
+												dataItem[1] ]);
+									});
+
+									error_dataTable.draw();
+
+									$('#module_error_heading').show();
+									$('#module_error_table').show();
+								} else {
+
+									$('#module_error_heading').hide();
+									$('#module_error_table').hide();
+
+								}
+								error_dataTable.draw();
+							} else {
+								if (data.error_msg != null) {
+									alert(data.error_msg);
+								} else {
+									alert("No data");
+								}
+							}
+
+						},
+						error : function(e) {
+							alert("Error occured");
+							return;
+						}
+
+					});
+			/*]]>*/
+
+		}
+
+		function upload_employees() {
+
+			if ($('#employee_csv_file').val() == "") {
+				alert("Please upload csv file");
+				return;
+			}
+
+			if (!$('#employee_csv_file').val() == "") {
+				if (!endsWith($('#employee_csv_file')[0].files[0].name, 'csv')) {
+					alert($('#employee_csv_file')[0].files[0].name
+							+ " is not a valid csv file!");
+					return;
+				}
+				var size = $('#employee_csv_file')[0].files[0].size;
+				if (size > 5120000) {
+					alert("CSV file  should be less than 5 MB");
+					return;
+				}
+			}
+
+			var form = $('#submit_form')[0];
+			var formdata = new FormData(form);
+
+			var dataTable = $('#employee_dataTable').DataTable();
+			dataTable.clear().draw();
+
+			var error_dataTable = $('#employee_error_dataTable').DataTable();
+			error_dataTable.clear().draw();
+
+			$("#pageloader").fadeIn();
+
+			/*<![CDATA[*/
+
+			$
+					.ajax({
+						url : "checkEmployeeFile",
+						method : "post",
+						async : false,
+						data : formdata,
+						enctype : 'multipart/form-data',
+						processData : false,
+						contentType : false,
+						cache : false,
+
+						success : function(data) {
+							$("#pageloader").fadeOut();
+							if (data != null && data.error_msg == null) {
+
+								data.employeeModel
+										.forEach(function(dataItem) {
+											dataTable.row
+													.add([
+															'<input type="checkbox" checked="checked" class="employee_checkbox"/>',
+															dataItem.emp_code,
+															dataItem.emp_name,
+															dataItem.psa,
+															dataItem.design_short_desc,
+															dataItem.pa,
+															dataItem.email_id,
+															dataItem.mobile_no ]);
+										});
+								dataTable.draw();
+								if (data.error_records != null) {
+									data.error_records.forEach(function(
+											dataItem) {
+										error_dataTable.row.add([ dataItem[0],
+												dataItem[1] ]);
+									});
+
+									error_dataTable.draw();
+
+									$('#employee_error_heading').show();
+									$('#employee_error_table').show();
+								} else {
+
+									$('#employee_error_heading').hide();
+									$('#employee_error_table').hide();
+
+								}
+							} else {
+								if (data.error_msg != null) {
+									alert(data.error_msg);
+								} else {
+									alert("No data");
+								}
+							}
+
+						},
+						error : function(e) {
+							alert("Error occured");
+							return;
+						}
+
+					});
+			/*]]>*/
+
+		}
+
+		function validate() {
+
+			var event_name = $('#event_name').val();
+			var remarks = $('#remarks').val();
+
+			if (($('#remarks').val()).trim() == '') {
+				alert("Please enter remarks");
+				return false;
+			}
+
+			var regularExpression = /(cook|<|>|;|:)/i;
+			if (regularExpression.test(event_name.toLowerCase())
+					|| regularExpression.test(remarks.toLowerCase())) {
+				alert("Please make sure your input doesn't contain characters/words like cook < > ; :");
+				return false;
+			}
+
+			var arr = [];
+			var count = 0;
+
+			var from_date = new Date($('#startDate').val());
+			var to_date = new Date($('#endDate').val());
+
+			//best to use .getTime() to compare dates
+			if (from_date.getTime() > to_date.getTime()) {
+				alert("Valid Till date cannot be less than Valid From date");
+				return false;
+			}
+
+			$('#employee_dataTable').DataTable().rows().every(
+					function(rowIdx, tableLoop, rowLoop) {
+						var data = this.data();
+						var row = $(this.node());
+						var checkValue = row.find("input[type='checkbox']").is(
+								":checked");
+						// $('#tableId').find("tbody input[type='checkbox']").each(function(){
+						//if($(this).is(":checked")){
+						//arr.push($(this).closest('tr').find('td:eq(1)').text());
+
+						if (checkValue) {
+							arr.push(row.find('td:eq(1)').text());
+							count++;
+						}
+					});
+
+			if (count > 0) {
+				$('#employeeArray').val(arr);
+			} else {
+				alert("Please add at lease one employee");
+				return false;
+			}
+
+			arr = [];
+			count = 0;
+
+			$('#module_dataTable').DataTable().rows().every(
+					function(rowIdx, tableLoop, rowLoop) {
+						var data = this.data();
+						var row = $(this.node());
+						var checkValue = row.find("input[type='checkbox']").is(
+								":checked");
+						// $('#tableId').find("tbody input[type='checkbox']").each(function(){
+						//if($(this).is(":checked")){
+						//arr.push($(this).closest('tr').find('td:eq(1)').text());
+
+						if (checkValue) {
+							arr.push(row.find('td:eq(4)').text());
+							count++;
+						}
+					});
+
+			if (count > 0) {
+				$('#moduleArray').val(arr);
+			} else {
+				alert("Please add at lease one module");
+				return false;
+			}
+
+			return true;
+		}
+	</script>
+</body>
+</html>

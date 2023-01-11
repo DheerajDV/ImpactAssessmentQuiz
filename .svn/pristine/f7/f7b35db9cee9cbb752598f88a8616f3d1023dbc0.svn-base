@@ -1,0 +1,46 @@
+package com.iocl.ImpactAssessmentQuiz.model;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "MST_ADMIN")
+public class MstAdminModel {
+
+	@Id
+	@Column(name = "EMP_CODE")
+	private Long emp_code;
+
+	@Column(name = "DIV_CODE")
+	private String div_code;
+
+	/**
+	 * @return the emp_code
+	 */
+	public Long getEmp_code() {
+		return emp_code;
+	}
+
+	/**
+	 * @param emp_code the emp_code to set
+	 */
+	public void setEmp_code(Long emp_code) {
+		this.emp_code = emp_code;
+	}
+	
+	/**
+	 * @return the div_code
+	 */
+	public String getDiv_code() {
+		return div_code;
+	}
+
+	/**
+	 * @param div_code the div_code to set
+	 */
+	public void setDiv_code(String div_code) {
+		this.div_code = div_code;
+	}
+}

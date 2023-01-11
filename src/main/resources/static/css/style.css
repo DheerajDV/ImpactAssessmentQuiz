@@ -1,0 +1,547 @@
+.boxpos {
+	position: relative;
+}
+
+.test_template {
+	position: absolute;
+	top: 0%;
+	padding-left: 2%;
+	text-align: left;
+	width: 100%;
+	font-family: 'MTCORSVA';
+	font-size: 37px;
+	color: red;
+	/* 		background-color: rgba(184, 173, 173, 0.6); */
+}
+
+.salutation {
+	position: absolute;
+	top: 46.7%;
+	left: 26%;
+	color: black;
+	text-align: left;
+	/*width:80vw;*/
+	width: 100%;
+	font-family: 'MTCORSVA';
+	font-size: 37px;
+	color: black;
+}
+
+.sr_no {
+	position: absolute;
+	top: 37%;
+	left: 17%;
+	color: black;
+	text-align: center;
+	font-family: 'MTCORSVA';
+	font-size: 30px;
+}
+
+.date {
+	position: absolute;
+	top: 37%;
+	right: 8%;
+	color: black;
+	text-align: center;
+	font-family: 'MTCORSVA';
+	font-size: 30px;
+}
+
+.reason {
+	position: absolute;
+	top: 56.5%;
+	/* right: 10%; */
+	color: black;
+	text-align: center;
+	/* width: 80vw; */
+	width: 100%;
+	font-family: 'MTCORSVA';
+	font-size: 37px;
+	font-weigth: 200;
+}
+
+.reason p {
+	line-height: 6.2rem;
+}
+
+.name {
+	position: absolute;
+	bottom: 9.5%;
+	left: 33%;
+	color: black;
+	text-align: center;
+	font-family: 'MTCORSVA';
+	font-size: 30px;
+}
+
+.sign {
+	height: 70px;
+	width: 110px;
+	position: absolute;
+	bottom: 12.2%;
+	left: 80%;
+	color: black;
+	text-align: center;
+	font-family: 'MTCORSVA';
+	font-size: 15px;
+	position: absolute;
+}
+
+.flex {
+	align-items: center !important;
+	justify-content: center !important;
+}
+
+@media screen and (max-width:2560px) {
+	.test_template {
+		position: absolute;
+		top: 0%;
+		padding-left: 2%;
+		text-align: left;
+		width: 100%;
+		font-family: 'MTCORSVA';
+		font-size: 37px;
+		color: red;
+		/* 		background-color: rgba(184, 173, 173, 0.6); */
+	}
+	.salutation {
+		position: absolute;
+		top: 46.7%;
+		left: 26%;
+		color: black;
+		text-align: left;
+		/*width:80vw;*/
+		width: 100%;
+		font-family: 'MTCORSVA';
+		font-size: 37px;
+		color: black;
+	}
+	.sr_no {
+		position: absolute;
+		top: 37%;
+		left: 17%;
+		color: black;
+		text-align: center;
+		font-family: 'MTCORSVA';
+		font-size: 30px;
+	}
+	.date {
+		position: absolute;
+		top: 37%;
+		right: 8%;
+		color: black;
+		text-align: center;
+		font-family: 'MTCORSVA';
+		font-size: 30px;
+	}
+	.reason {
+		position: absolute;
+		top: 56.5%;
+		/* right: 10%; */
+		color: black;
+		text-align: center;
+		/* width: 80vw; */
+		width: 100%;
+		font-family: 'MTCORSVA';
+		font-size: 37px;
+		font-weigth: 200;
+	}
+	.reason p {
+		line-height: 6.2rem;
+	}
+	.name {
+		position: absolute;
+		bottom: 9.5%;
+		left: 33%;
+		color: black;
+		text-align: center;
+		font-family: 'MTCORSVA';
+		font-size: 30px;
+	}
+	.sign {
+		height: 70px;
+		width: 110px;
+		position: absolute;
+		bottom: 12.2%;
+		left: 80%;
+		color: black;
+		text-align: center;
+		font-family: 'MTCORSVA';
+		font-size: 15px;
+		position: absolute;
+	}
+}
+
+@media screen and (max-width:1440px) {
+	.test_template {
+		position: absolute;
+		top: 0%;
+		padding-left: 2%;
+		text-align: left;
+		width: 100%;
+		font-family: 'MTCORSVA';
+		font-size: 28px;
+		color: red;
+		/* 		background-color: rgba(184, 173, 173, 0.6); */
+	}
+	.salutation {
+		position: absolute;
+		top: 46.8%;
+		left: 26%;
+		color: black;
+		text-align: left;
+		/*width:80vw;*/
+		width: 100%;
+		font-family: 'MTCORSVA';
+		font-size: 28px;
+		color: black;
+		text-align: left;
+	}
+	.sr_no {
+		position: absolute;
+		top: 37%;
+		left: 17%;
+		color: black;
+		text-align: center;
+		font-family: 'MTCORSVA';
+		font-size: 20px;
+	}
+	.date {
+		position: absolute;
+		top: 37%;
+		right: 9%;
+		color: black;
+		text-align: center;
+		font-family: 'MTCORSVA';
+		font-size: 20px;
+	}
+	.reason {
+		position: absolute;
+		top: 56.5%;
+		/* right: 10%; */
+		color: black;
+		text-align: center;
+		/* width: 80vw; */
+		width: 100%;
+		font-family: 'MTCORSVA';
+		font-size: 28px;
+		font-weigth: 200;
+	}
+	.reason p {
+		line-height: 4.5rem;
+	}
+	.name {
+		position: absolute;
+		bottom: 9.3%;
+		left: 33%;
+		color: black;
+		text-align: center;
+		font-family: 'MTCORSVA';
+		font-size: 22px;
+	}
+	.sign {
+		height: 40px;
+		width: 80px;
+		position: absolute;
+		bottom: 12.2%;
+		left: 80%;
+		color: black;
+		text-align: center;
+		font-family: 'MTCORSVA';
+		font-size: 15px;
+		position: absolute;
+	}
+}
+
+@media screen and (max-width:1024px) {
+	.test_template {
+		position: absolute;
+		top: 0%;
+		padding-left: 2%;
+		color: black;
+		text-align: left;
+		width: 100%;
+		font-family: 'MTCORSVA';
+		font-size: 20px;
+		color: red;
+	}
+	.salutation {
+		position: absolute;
+		top: 46.8%;
+		left: 26%;
+		color: black;
+		text-align: left;
+		/*width:80vw;*/
+		width: 100%;
+		font-family: 'MTCORSVA';
+		font-size: 20px;
+		color: black;
+		text-align: left;
+	}
+	.sr_no {
+		position: absolute;
+		top: 37%;
+		left: 17%;
+		color: black;
+		text-align: center;
+		font-family: 'MTCORSVA';
+		font-size: 14px;
+	}
+	.date {
+		position: absolute;
+		top: 37%;
+		right: 9%;
+		color: black;
+		text-align: center;
+		font-family: 'MTCORSVA';
+		font-size: 14px;
+	}
+	.reason {
+		position: absolute;
+		line-height: 4rem;
+		top: 56.5%;
+		/* right: 10%; */
+		color: black;
+		text-align: center;
+		/* width: 80vw; */
+		width: 100%;
+		font-family: 'MTCORSVA';
+		font-size: 20px;
+		font-weigth: 200;
+	}
+	.reason p {
+		line-height: 3.3rem;
+	}
+	.name {
+		position: absolute;
+		bottom: 8.5%;
+		left: 33%;
+		color: black;
+		text-align: center;
+		font-family: 'MTCORSVA';
+		font-size: 15px;
+	}
+	.sign {
+		height: 30px;
+		width: 70px;
+		position: absolute;
+		bottom: 13%;
+		left: 78%;
+		color: black;
+		text-align: center;
+		font-family: 'MTCORSVA';
+		font-size: 15px;
+		position: absolute;
+	}
+}
+
+@media screen and (max-width:768px) {
+	.test_template {
+		position: absolute;
+		top: 0%;
+		padding-left: 2%;
+		text-align: left;
+		width: 100%;
+		font-family: 'MTCORSVA';
+		font-size: 13px;
+		color: red;
+	}
+	.salutation {
+		position: absolute;
+		top: 47%;
+		left: 26%;
+		color: black;
+		text-align: left;
+		/*width:80vw;*/
+		width: 100%;
+		font-family: 'MTCORSVA';
+		font-size: 13px;
+		color: black;
+		text-align: left;
+	}
+	.sr_no {
+		position: absolute;
+		top: 36.5%;
+		left: 17%;
+		color: black;
+		text-align: center;
+		font-family: 'MTCORSVA';
+		font-size: 11px;
+	}
+	.date {
+		position: absolute;
+		top: 36.5%;
+		right: 8%;
+		color: black;
+		text-align: center;
+		font-family: 'MTCORSVA';
+		font-size: 11px;
+	}
+	.reason {
+		position: absolute;
+		line-height: 4rem;
+		top: 56.5%;
+		/* right: 10%; */
+		color: black;
+		text-align: center;
+		/* width: 80vw; */
+		width: 100%;
+		font-family: 'MTCORSVA';
+		font-size: 13px;
+		font-weigth: 200;
+	}
+	.reason p {
+		line-height: 2rem;
+	}
+	.name {
+		position: absolute;
+		bottom: 7%;
+		left: 33%;
+		color: black;
+		text-align: center;
+		font-family: 'MTCORSVA';
+		font-size: 11px;
+	}
+	.sign {
+		height: 20px;
+		width: 60px;
+		position: absolute;
+		bottom: 13%;
+		left: 78%;
+		color: black;
+		text-align: center;
+		font-family: 'MTCORSVA';
+		font-size: 15px;
+		position: absolute;
+	}
+	.container {
+		max-width: 768px;
+	}
+	.img-fluid2 {
+		width: unset;
+		height: auto;
+	}
+}
+
+@media screen and (max-width:767px) {
+	.test_template {
+		position: absolute;
+		top: 0%;
+		padding-left: 2%;
+		text-align: left;
+		width: 100%;
+		font-family: 'MTCORSVA';
+		font-size: 13px;
+		color: red;
+	}
+	.salutation {
+		position: absolute;
+		top: 47%;
+		left: 26%;
+		color: black;
+		text-align: left;
+		/*width:80vw;*/
+		width: 100%;
+		font-family: 'MTCORSVA';
+		font-size: 13px;
+		color: black;
+		text-align: left;
+	}
+	.sr_no {
+		position: absolute;
+		top: 36.5%;
+		left: 17%;
+		color: black;
+		text-align: center;
+		font-family: 'MTCORSVA';
+		font-size: 11px;
+	}
+	.date {
+		position: absolute;
+		top: 36.5%;
+		right: 8%;
+		color: black;
+		text-align: center;
+		font-family: 'MTCORSVA';
+		font-size: 11px;
+	}
+	.reason {
+		position: absolute;
+		line-height: 4rem;
+		top: 56.5%;
+		/* right: 10%; */
+		color: black;
+		text-align: center;
+		/* width: 80vw; */
+		width: 100%;
+		font-family: 'MTCORSVA';
+		font-size: 13px;
+		font-weigth: 200;
+	}
+	.reason p {
+		line-height: 2rem;
+	}
+	.name {
+		position: absolute;
+		bottom: 7%;
+		left: 33%;
+		color: black;
+		text-align: center;
+		font-family: 'MTCORSVA';
+		font-size: 11px;
+	}
+	.sign {
+		height: 20px;
+		width: 60px;
+		position: absolute;
+		bottom: 13%;
+		left: 78%;
+		color: black;
+		text-align: center;
+		font-family: 'MTCORSVA';
+		font-size: 15px;
+		position: absolute;
+	}
+	.container {
+		max-width: 768px;
+	}
+	.img-fluid2 {
+		width: unset;
+		height: auto;
+	}
+}
+
+@media screen and (max-width: 414px) {
+	.img-fluid2 {
+		width: 50%;
+		height: auto;
+		margin-right: 2%;
+	}
+}
+
+@media screen and (max-width: 375px) {
+	.sign {
+		bottom: 8%;
+	}
+	.img-fluid2 {
+		margin-right: -11%;
+	}
+}
+
+@media screen and (max-width: 360px) {
+	.sign {
+		bottom: 8%;
+	}
+	.img-fluid2 {
+		margin-right: -16%;
+	}
+}
+
+@media screen and (max-width: 320px) {
+	.sign {
+		bottom: 8%;
+	}
+	.img-fluid2 {
+		margin-right: -29%;
+	}
+}

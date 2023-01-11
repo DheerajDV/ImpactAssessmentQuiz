@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Swadhyaya Impact Assessment Quiz</title>
+</head>
+<body>
+	<div th:fragment="quiz" class="container-fluid">
+		<form name="questionForm" method="post" th:action="@{/FinishQuiz}">
+			<div class="col-lg-4 col-md-4 hidden-xs hidden-sm text-left">
+				<div id="Quiz_navigation" class="sidenav">
+					<h5>Quiz Navigation Bar</h5>
+					<label><span class="label label-info"> </span>&nbsp;Selected
+						question&nbsp; <span style="display: initial;"
+						class="label label-danger"></span>&nbsp;Question not
+						attempted&nbsp; <span class="label label-success"> </span>&nbsp;Question
+						attempted&nbsp;</label>
+					<div class="table-responsive">
+						<table
+							class="table table borderless table-borderless table-condensed ">
+							<tbody>
+
+								<tr
+									th:each="i: ${#numbers.sequence(1, quizBean.quiz_questions,10)}">
+									<td th:if="${i<=quizBean.quiz_questions}">
+										<h5>
+											<span th:id="${i}" class="label"
+												th:classappend="${quizBean.selected_seq == i ? 'label-info' :
+												quizBean.ques_response[i-1][2]  == 'Y' ?  'label-success' : 'label-danger'}"
+												th:onclick="|movetoques(this.id,'${quizBean.quiz_id}','${quizBean.question_det[0][0]}','${quizBean.question_det[0][1]}')|"
+												th:inline="text">[[${i}]]</span>
+										</h5>
+									</td>
+									<td th:if="${i+1<=quizBean.quiz_questions}">
+										<h5>
+											<span th:id="${i+1}" class="label"
+												th:classappend="${quizBean.selected_seq == i+1 ?  'label-info' :
+															quizBean.ques_response[i][2]  == 'Y' ? 'label-success' : 'label-danger'}"
+												th:onclick="|movetoques(this.id,'${quizBean.quiz_id}','${quizBean.question_det[0][0]}','${quizBean.question_det[0][1]}')|"
+												th:inline="text">[[${i+1}]]</span>
+										</h5>
+									</td>
+									<td th:if="${i+2<=quizBean.quiz_questions}">
+										<h5>
+											<span th:id="${i+2}" class="label"
+												th:classappend="${quizBean.selected_seq == i+2 ?  'label-info' :
+															quizBean.ques_response[i+1][2]  == 'Y' ? 'label-success' : 'label-danger'}"
+												th:onclick="|movetoques(this.id,'${quizBean.quiz_id}','${quizBean.question_det[0][0]}','${quizBean.question_det[0][1]}')|"
+												th:inline="text">[[${i+2}]]</span>
+										</h5>
+									</td>
+									<td th:if="${i+3<=quizBean.quiz_questions}">
+										<h5>
+											<span th:id="${i+3}" class="label"
+												th:classappend="${quizBean.selected_seq == i+3 ?  'label-info' :
+															quizBean.ques_response[i+2][2]  == 'Y' ? 'label-success' : 'label-danger'}"
+												th:onclick="|movetoques(this.id,'${quizBean.quiz_id}','${quizBean.question_det[0][0]}','${quizBean.question_det[0][1]}')|"
+												th:inline="text">[[${i+3}]]</span>
+										</h5>
+									</td>
+									<td th:if="${i+4<=quizBean.quiz_questions}">
+										<h5>
+											<span th:id="${i+4}" class="label"
+												th:classappend="${quizBean.selected_seq == i+4 ?  'label-info' :
+															quizBean.ques_response[i+3][2]  == 'Y' ? 'label-success' : 'label-danger'}"
+												th:onclick="|movetoques(this.id,'${quizBean.quiz_id}','${quizBean.question_det[0][0]}','${quizBean.question_det[0][1]}')|"
+												th:inline="text">[[${i+4}]]</span>
+										</h5>
+									</td>
+									<td th:if="${i+5<=quizBean.quiz_questions}">
+										<h5>
+											<span th:id="${i+5}" class="label"
+												th:classappend="${quizBean.selected_seq == i+5 ?  'label-info' :
+															quizBean.ques_response[i+4][2]  == 'Y' ? 'label-success'  : 'label-danger'}"
+												th:onclick="|movetoques(this.id,'${quizBean.quiz_id}','${quizBean.question_det[0][0]}','${quizBean.question_det[0][1]}')|"
+												th:inline="text">[[${i+5}]]</span>
+										</h5>
+									</td>
+									<td th:if="${i+6<=quizBean.quiz_questions}">
+										<h5>
+											<span th:id="${i+6}" class="label"
+												th:classappend="${quizBean.selected_seq == i+6 ?  'label-info'  :
+															quizBean.ques_response[i+5][2]  == 'Y' ? 'label-success' : 'label-danger'}"
+												th:onclick="|movetoques(this.id,'${quizBean.quiz_id}','${quizBean.question_det[0][0]}','${quizBean.question_det[0][1]}')|"
+												th:inline="text">[[${i+6}]]</span>
+										</h5>
+									</td>
+									<td th:if="${i+7<=quizBean.quiz_questions}">
+										<h5>
+											<span th:id="${i+7}" class="label"
+												th:classappend="${quizBean.selected_seq == i+7 ?  'label-info' :
+															quizBean.ques_response[i+6][2]  == 'Y' ? 'label-success' : 'label-danger'}"
+												th:onclick="|movetoques(this.id,'${quizBean.quiz_id}','${quizBean.question_det[0][0]}','${quizBean.question_det[0][1]}')|"
+												th:inline="text">[[${i+7}]]</span>
+										</h5>
+									</td>
+									<td th:if="${i+8<=quizBean.quiz_questions}">
+										<h5>
+											<span th:id="${i+8}" class="label"
+												th:classappend="${quizBean.selected_seq == i+8 ?  'label-info' :
+															quizBean.ques_response[i+7][2]  == 'Y' ? 'label-success' : 'label-danger'}"
+												th:onclick="|movetoques(this.id,'${quizBean.quiz_id}','${quizBean.question_det[0][0]}','${quizBean.question_det[0][1]}')|"
+												th:inline="text">[[${i+8}]]</span>
+										</h5>
+									</td>
+									<td th:if="${i+9<=quizBean.quiz_questions}">
+										<h5>
+											<span th:id="${i+9}" class="label"
+												th:classappend="${quizBean.selected_seq == i+9 ?  'label-info' :
+															quizBean.ques_response[i+7][2]  == 'Y' ? 'label-success' : 'label-danger'}"
+												th:onclick="|movetoques(this.id,'${quizBean.quiz_id}','${quizBean.question_det[0][0]}','${quizBean.question_det[0][1]}')|"
+												th:inline="text">[[${i+9}]]</span>
+										</h5>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+			</div>
+			<div class="col-sm-5 col-xs-5 hidden-md hidden-lg text-left">
+				<div id="Quiz_navigation" class="sidenav">
+					<h5>Quiz Navigation Bar</h5>
+					<div class="table-responsive">
+						<table
+							class="table table borderless table-borderless table-condensed ">
+							<tbody>
+								<tr
+									th:each="i: ${#numbers.sequence(1, quizBean.quiz_questions,5)}">
+									<td th:if="${i<=quizBean.quiz_questions}">
+										<h5>
+											<span th:id="${i}" class="label"
+												th:classappend="${quizBean.selected_seq == i ? 'label-info' :
+												quizBean.ques_response[i-1][2]  == 'Y' ?  'label-success' : 'label-danger'}"
+												th:onclick="|movetoques(this.id,'${quizBean.quiz_id}','${quizBean.question_det[0][0]}','${quizBean.question_det[0][1]}')|"
+												th:inline="text">[[${i}]]</span>
+										</h5>
+									</td>
+									<td th:if="${i+1<=quizBean.quiz_questions}">
+										<h5>
+											<span th:id="${i+1}" class="label"
+												th:classappend="${quizBean.selected_seq == i+1 ?  'label-info' :
+															quizBean.ques_response[i][2]  == 'Y' ? 'label-success' : 'label-danger'}"
+												th:onclick="|movetoques(this.id,'${quizBean.quiz_id}','${quizBean.question_det[0][0]}','${quizBean.question_det[0][1]}')|"
+												th:inline="text">[[${i+1}]]</span>
+										</h5>
+									</td>
+									<td th:if="${i+2<=quizBean.quiz_questions}">
+										<h5>
+											<span th:id="${i+2}" class="label"
+												th:classappend="${quizBean.selected_seq == i+2 ?  'label-info' :
+															quizBean.ques_response[i+1][2]  == 'Y' ? 'label-success' : 'label-danger'}"
+												th:onclick="|movetoques(this.id,'${quizBean.quiz_id}','${quizBean.question_det[0][0]}','${quizBean.question_det[0][1]}')|"
+												th:inline="text">[[${i+2}]]</span>
+										</h5>
+									</td>
+									<td th:if="${i+3<=quizBean.quiz_questions}">
+										<h5>
+											<span th:id="${i+3}" class="label"
+												th:classappend="${quizBean.selected_seq == i+3 ?  'label-info' :
+															quizBean.ques_response[i+2][2]  == 'Y' ? 'label-success' : 'label-danger'}"
+												th:onclick="|movetoques(this.id,'${quizBean.quiz_id}','${quizBean.question_det[0][0]}','${quizBean.question_det[0][1]}')|"
+												th:inline="text">[[${i+3}]]</span>
+										</h5>
+									</td>
+									<td th:if="${i+4<=quizBean.quiz_questions}">
+										<h5>
+											<span th:id="${i+4}" class="label"
+												th:classappend="${quizBean.selected_seq == i+4 ?  'label-info' :
+															quizBean.ques_response[i+3][2]  == 'Y' ? 'label-success' : 'label-danger'}"
+												th:onclick="|movetoques(this.id,'${quizBean.quiz_id}','${quizBean.question_det[0][0]}','${quizBean.question_det[0][1]}')|"
+												th:inline="text">[[${i+4}]]</span>
+										</h5>
+									</td>
+
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+			</div>
+
+			<div class="col-lg-8 col-md-8 col-sm-7 col-xs-7 text-left">
+
+
+				<h5 th:inline="text">[[${quizBean.question_det[0][2]}]]</h5>
+				<div th:each="data,i : ${quizBean.option_det}">
+					<label><input th:inline="text" type="radio"
+						th:checked="${data[2]=='Y'}" th:value="${data[0]}"
+						th:id="${'answer'+i.index}" name="answer"> [[${data[1]}]]</label><br>
+				</div>
+				<p>&nbsp;</p>
+
+				<button th:if="${quizBean.selected_seq<quizBean.quiz_questions}"
+					type="button" id="submit1" class="btn btn-default" value="skip"
+					th:onclick="|customSubmit(this.value,'${quizBean.question_det[0][1]+1}','${quizBean.quiz_id}','${quizBean.question_det[0][0]}','${quizBean.question_det[0][1]}')|">SKIP</button>
+
+				&nbsp;
+				<button th:if="${quizBean.selected_seq>1}" type="button"
+					id="submit1" class="btn btn-default" value="Previous"
+					th:onclick="|customSubmit(this.value,'${quizBean.question_det[0][1]-1}','${quizBean.quiz_id}','${quizBean.question_det[0][0]}','${quizBean.question_det[0][1]}')|">PREVIOUS</button>
+				&nbsp;
+				<button th:if="${quizBean.selected_seq<quizBean.quiz_questions}"
+					type="button" id="submit1" class="btn btn-default" value="Next"
+					th:onclick="|customSubmit(this.value,'${quizBean.question_det[0][1]+1}','${quizBean.quiz_id}','${quizBean.question_det[0][0]}','${quizBean.question_det[0][1]}')|">NEXT</button>
+
+				<p>&nbsp;</p>
+				<br></br>
+				<button type="button" id="submit1" class="btn btn-primary"
+					value="Finish Exam"
+					th:onclick="|customSubmit(this.value,'${quizBean.question_det[0][1]+1}','${quizBean.quiz_id}','${quizBean.question_det[0][0]}','${quizBean.question_det[0][1]}')|">FINISH</button>
+			</div>
+			<input type="hidden" id="question_form_action" name="action" /><input
+				type="hidden" name="quiz_id" th:value="${quizBean.quiz_id}" /> <input
+				type="hidden" name="curr_question_id"
+				th:value="${quizBean.question_det[0][0]}" /> <input type="hidden"
+				name="curr_question_seq" th:value="${quizBean.question_det[0][1]}" />
+			<input type="hidden" id="question_form_option_selected"
+				name="curr_option_seq_selected" /> <input type="hidden"
+				name="move_to_ques_seq" th:value="${quizBean.question_det[0][1]+1}" />
+
+			<!--<input type="hidden" name="noOfAttempts"/>-->
+		</form>
+	</div>
+</body>
+</html>

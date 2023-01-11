@@ -1,0 +1,522 @@
+<!doctype html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Swadhyaya Impact Assessment Quiz</title>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="keywords"
+	content="bootstrap, bootstrap admin template, admin theme, admin dashboard, dashboard template, admin template, responsive" />
+<meta name="author" content="Codedthemes" />
+<!-- Favicon -->
+<link rel="icon" th:href="@{/favicon.ico}"></link>
+<!-- Required Fremwork -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{assets/css/bootstrap/css/bootstrap.min.css}" />
+
+<!-- themify icon -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{assets/icon/themify-icons/themify-icons.css}" />
+<!-- font-awesome-n -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{assets/css/font-awesome-n.min.css}" />
+<link rel="stylesheet" type="text/css"
+	th:href="@{assets/css/font-awesome.min.css}" />
+<!-- scrollbar.css -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{assets/css/jquery.mCustomScrollbar.css}" />
+<!-- Style.css -->
+<link rel="stylesheet" type="text/css" th:href="@{assets/css/style.css}" />
+<!-- Select2.css -->
+<link th:href="@{/css/select2.min.css}" rel="stylesheet" />
+<!-- template.css for form design -->
+<link th:href="@{/css/template.css}" rel=" stylesheet" />
+<!-- template.css for form design -->
+<link th:href="@{/css/alertStyle.css}" rel=" stylesheet" />
+<!-- Datatables  CSS -->
+<link rel="stylesheet" th:href="@{/css/jquery.dataTables.min.css}" />
+<link rel="stylesheet" th:href="@{/css/buttons.dataTables.min.css}" />
+
+<style>
+#footerid {
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	text-align: center;
+	background-color: white;
+	color: black;
+}
+</style>
+<style>
+#pageloader {
+	position: fixed;
+	width: 100%;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	background-color: rgba(255, 255, 255, 0.7);
+	z-index: 9999;
+	display: none;
+}
+
+@
+-webkit-keyframes spin {
+	from {-webkit-transform: rotate(0deg);
+}
+
+to {
+	-webkit-transform: rotate(360deg);
+}
+
+}
+@
+keyframes spin {
+	from {transform: rotate(0deg);
+}
+
+to {
+	transform: rotate(360deg);
+}
+
+}
+#pageloader::after {
+	content: '';
+	display: block;
+	position: absolute;
+	left: 48%;
+	top: 40%;
+	width: 40px;
+	height: 40px;
+	border-style: solid;
+	border-color: black;
+	border-top-color: transparent;
+	border-width: 4px;
+	border-radius: 50%;
+	-webkit-animation: spin .8s linear infinite;
+	animation: spin .8s linear infinite;
+}
+</style>
+</head>
+<body>
+
+	<div id="pageloader"></div>
+	<div>
+		<div th:replace="../includes/preLoader :: preLoader"></div>
+		<div id="pcoded" class="pcoded">
+			<div class="pcoded-overlay-box"></div>
+			<div class="pcoded-container navbar-wrapper">
+				<nav th:replace="../includes/emp_details :: emp_details"></nav>
+				<div class="pcoded-main-container">
+					<div class="pcoded-wrapper">
+						<nav th:replace="../includes/menuBar :: menuBar"></nav>
+						<div class="pcoded-content">
+							<div class="pcoded-inner-content">
+								<!-- Main-body start -->
+								<div class="main-body">
+									<div class="page-wrapper">
+										<!-- Page-body start -->
+										<div class="page-body">
+											<div class="row">
+												<div class="col-xl-1 col-md-1"></div>
+												<div class="col-xl-10 col-md-10">
+													<div id="sucessMsg" th:if="${message!=null}"
+														class="alert
+														success" th:inline="text">
+														<span class="closebtn"
+															onclick="this.parentElement.style.display='none';">&times;</span>
+														<strong></strong> [[${message}]]!
+													</div>
+													<div id="errMsg" th:if="${errorMsg!=null}" class="alert"
+														th:inline="text">
+														<span class="closebtn"
+															onclick="this.parentElement.style.display='none';">&times;</span>
+														<strong></strong> [[${errorMsg}]]!
+													</div>
+													<div class="card">
+														<form id="submit_form" name="submit_form" method="post">
+															<div class="card-header">
+																<h4 style="text-align: center;">Employee Wise Usage
+																	Report</h4>
+															</div>
+															<div class="card-body">
+																<div class="form-row">
+																	<div
+																		th:if="${session.sessionMaster.admin_flg=='Y' and session.sessionMaster.employeeModel.curr_comp_code=='100'}"
+																		class="form-group col-md-2">Upload Report</div>
+																	<div
+																		th:if="${session.sessionMaster.admin_flg=='Y' and session.sessionMaster.employeeModel.curr_comp_code=='100'}"
+																		class="form-group col-md-10">
+																		<input id="report_csv_file" name="report_csv_file"
+																			class="form-Input" type="file" accept=".xlsx" />&nbsp;&nbsp;
+																		<button type="button" class="btn btn-warning"
+																			style="font-size: inherit;"
+																			onclick="upload_report();">Upload Report</button>
+																	</div>
+																	<div
+																		th:if="${session.sessionMaster.admin_flg=='Y' and session.sessionMaster.employeeModel.curr_comp_code=='100'}"
+																		class="form-group col-md-2"></div>
+																	<div
+																		th:if="${session.sessionMaster.admin_flg=='Y' and session.sessionMaster.employeeModel.curr_comp_code=='100'}"
+																		class="form-group col-md-10">
+																		<a th:href="@{/UsageReportUploadTemplate}" class=""
+																			style="font-size: 12px; color: #03a6d6; text-decoration: underline">(Click
+																			here to download Template for Usage Report Upload)</a>
+																	</div>
+																	<div id="error_table_heading" style="display: none;"
+																		class="form-group col-md-12">
+																		<h6 style="text-align: left; color: red;">Following
+																			data could not be uploaded</h6>
+																	</div>
+																	<div id="error_table" style="display: none;"
+																		class="form-group col-md-12 table-responsive">
+																		<table class="table table-bordered  table-sm"
+																			id="error_table_dataTable" style="width: 100%">
+																			<thead>
+																				<tr>
+
+																					<th>Employee Code</th>
+																					<th>Activity Code</th>
+																					<th>Error</th>
+
+																				</tr>
+																			</thead>
+																			<tbody>
+																			</tbody>
+																		</table>
+																	</div>
+																	<div class="form-group col-md-12">
+																		<table
+																			class="table table-bordered table-striped table-sm"
+																			id="dataTable" style="width: 100%">
+																			<thead>
+																				<tr>
+																					<th>EmployeeId</th>
+																					<th>Employee Name</th>
+																					<th>Active</th>
+																					<th>Designation</th>
+																					<th>E-mail</th>
+																					<th>Division</th>
+																					<th>Company</th>
+																					<th>Location</th>
+																					<th>Department</th>
+																					<th>Grade</th>
+																					<th>Activity Code</th>
+																					<th>Activity Name</th>
+																					<th>Domain</th>
+																					<th>Registration Status</th>
+																					<th>Start Date</th>
+																					<th>End Date</th>
+																					<th>Success Status</th>
+																					<th>Score</th>
+																					<th>Minimum Percentage Grade</th>
+																					<th>Course Duration(In Hours)</th>
+																					<th>Time Elapsed(In Hours)</th>
+																					<th>Current Attempt Indicator</th>
+																				</tr>
+																			</thead>
+																			<tbody>
+
+																			</tbody>
+																		</table>
+																	</div>
+
+																</div>
+															</div>
+														</form>
+													</div>
+												</div>
+												<div class="col-xl-1 col-md-1"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="footer-div">
+			<div th:replace="../includes/footer :: footer"></div>
+		</div>
+	</div>
+	<script type="text/javascript"
+		th:src="@{assets/js/jquery/jquery.min.js}"></script>
+	<script type="text/javascript"
+		th:src="@{assets/js/jquery-ui/jquery-ui.min.js} "></script>
+	<script type="text/javascript"
+		th:src="@{assets/js/popper.js/popper.min.js}"></script>
+	<script type="text/javascript"
+		th:src="@{assets/js/bootstrap/js/bootstrap.min.js} "></script>
+	<script th:src="@{/js/select2.min.js}"></script>
+	<!-- jquery slimscroll js -->
+	<script type="text/javascript"
+		th:src="@{assets/js/jquery-slimscroll/jquery.slimscroll.js}"></script>
+
+	<!-- slimscroll js -->
+	<script th:src="@{assets/js/jquery.mCustomScrollbar.concat.min.js} "></script>
+
+	<!-- menu js -->
+	<script th:src="@{assets/js/pcoded.min.js}"></script>
+	<script th:src="@{assets/js/vertical/vertical-layout.min.js} "></script>
+	<script type="text/javascript" th:src="@{assets/js/script.js} "></script>
+
+	<!-- Datatable js -->
+	<script th:src="@{/js/jquery.dataTables.min.js}" type="text/javascript"></script>
+	<script th:src="@{/js/dataTables.buttons.min.js}"
+		type="text/javascript"></script>
+	<script th:src="@{/js/buttons.flash.min.js}" type="text/javascript"></script>
+	<script th:src="@{/js/jszip.min.js}" type="text/javascript"></script>
+	<script th:src="@{/js/pdfmake.min.js}" type="text/javascript"></script>
+	<script th:src="@{/js/vfs_fonts.js}" type="text/javascript"></script>
+	<script th:src="@{/js/buttons.html5.min.js}" type="text/javascript"></script>
+	<script th:src="@{/js/buttons.print.min.js}" type="text/javascript"></script>
+	<script th:src="@{/js/jspdf.js}"></script>
+
+	<script th:inline="javascript">
+		$(document)
+				.ready(
+						function() {
+							$('.js-example-basic-single').select2();
+
+							setTimeout(function() {
+								$('#sucessMsg').fadeOut('fast');
+							}, 2000);
+
+							setTimeout(function() {
+								$('#errMsg').fadeOut('fast');
+							}, 2000);
+
+							$('#dataTable')
+									.DataTable(
+											{												
+												"ajax" : {
+													"url" : /*[[@{/EmpWiseUsageDataJSON}]]*/"/SIAQ/EmpWiseUsageDataJSON",
+													"dataSrc" : ''
+												},
+
+												"columns" : [
+														{
+															"data" : "trnEmpWiseUsageID.employeeModel.emp_code",
+															"defaultContent" : ""
+														},
+														{
+															"data" : "trnEmpWiseUsageID.employeeModel.emp_name",
+															"defaultContent" : ""
+														},
+														{
+															"data" : "trnEmpWiseUsageID.employeeModel.emp_status_code",
+															"defaultContent" : ""
+														},
+														{
+															"data" : "trnEmpWiseUsageID.employeeModel.designation",
+															"defaultContent" : ""
+														},
+														{
+															"data" : "trnEmpWiseUsageID.employeeModel.email_id",
+															"defaultContent" : ""
+														},
+														{
+															"data" : "trnEmpWiseUsageID.employeeModel.current_divn",
+															"defaultContent" : ""
+														},
+														{
+															"data" : "trnEmpWiseUsageID.employeeModel.curr_comp",
+															"defaultContent" : ""
+														},
+														{
+															"data" : "trnEmpWiseUsageID.employeeModel.loc_name",
+															"defaultContent" : ""
+														},
+														{
+															"data" : "trnEmpWiseUsageID.employeeModel.psa",
+															"defaultContent" : ""
+														},
+														{
+															"data" : "trnEmpWiseUsageID.employeeModel.emp_sub_grp_code",
+															"defaultContent" : ""
+														},
+														{
+															"data" : "trnEmpWiseUsageID.mstActivityListModel.activity_code",
+															"defaultContent" : ""
+														},
+														{
+															"data" : "trnEmpWiseUsageID.mstActivityListModel.activity_name",
+															"defaultContent" : ""
+														},
+														{
+															"data" : "trnEmpWiseUsageID.mstActivityListModel.domain",
+															"defaultContent" : ""
+														},
+														{
+															"data" : "registeration_status",
+															"defaultContent" : ""
+														},
+
+														{
+															"data" : "start_date",
+															"defaultContent" : ""
+														},
+														{
+															"data" : "end_date",
+															"defaultContent" : ""
+														},
+														{
+															"data" : "success_status",
+															"defaultContent" : ""
+														},
+														{
+															"data" : "score",
+															"defaultContent" : ""
+														},
+														{
+															"data" : "min_percentage",
+															"defaultContent" : ""
+														},
+														{
+															"data" : "course_duration",
+															"defaultContent" : ""
+														},
+
+														{
+															"data" : "time_elapsed",
+															"defaultContent" : ""
+														},
+														{
+															"data" : "current_attempt",
+															"defaultContent" : ""
+														} ],
+												dom : 'Bfrtip',
+												lengthMenu : [
+														[ 10, 25, 50, -1 ],
+														[ '10 rows', '25 rows',
+																'50 rows',
+																'Show all' ] ],
+												// 								"columnDefs" : [ {
+												// 									"width" : "300px",
+												// 									"targets" : 8
+												// 								} ],
+												buttons : [
+														{
+															extend : 'excel',
+															text : 'Save As Excel',
+															title : 'Employee Wise Usage Report',
+															exportOptions : {
+																modifier : {}
+															}
+														}, 'pageLength' ],
+												scrollX : true,
+
+											});
+
+						});
+
+		function endsWith(str, suffix) {
+			return str.indexOf(suffix, str.length - suffix.length) !== -1;
+		}
+
+		function upload_report() {
+
+			if ($('#report_csv_file').val() == "") {
+				alert("Please upload excel file");
+				return;
+			}
+
+			if (!$('#report_csv_file').val() == "") {
+				if (!endsWith($('#report_csv_file')[0].files[0].name, 'xlsx')) {
+					alert($('#report_csv_file')[0].files[0].name
+							+ " is not a valid excel file!");
+					return;
+				}
+				var size = $('#report_csv_file')[0].files[0].size;
+				if (size > 5120000) {
+					alert("Excel file  should be less than 5 MB");
+					return;
+				}
+			}
+
+			var form = $('#submit_form')[0];
+			var formdata = new FormData(form);
+
+			var dataTable = $('#employee_dataTable').DataTable();
+			dataTable.clear().draw();
+
+			var error_dataTable = $('#error_table_dataTable').DataTable();
+			error_dataTable.clear().draw();
+
+			$("#pageloader").fadeIn();
+
+			var form = $('#submit_form')[0];
+			var formdata = new FormData(form);
+
+			/*<![CDATA[*/
+
+			$
+					.ajax({
+						url : "uploadUsageReport",
+						method : "post",
+						async : false,
+						data : formdata,
+						enctype : 'multipart/form-data',
+						processData : false,
+						contentType : false,
+						cache : false,
+
+						success : function(data) {
+							$("#pageloader").fadeOut();
+							if (data != null && data.error_msg == null) {
+
+								if (data.error_records == null) {
+									alert("Data uploaded successfully");
+								} else {
+									alert("Data uploaded. Records which could not be uploaded due to error in data are displayed");
+								}
+
+								var table = $('#dataTable').DataTable();
+								table.ajax.reload();
+
+								if (data.error_records != null) {
+									data.error_records.forEach(function(
+											dataItem) {
+										error_dataTable.row.add([ dataItem[0],
+												dataItem[1], dataItem[2] ]);
+									});
+
+									error_dataTable.draw();
+
+									$('#error_table_heading').show();
+									$('#error_table').show();
+								} else {
+
+									$('#error_table_heading').hide();
+									$('#error_table').hide();
+
+								}
+
+							} else {
+								if (data.error_msg != null) {
+									alert(data.error_msg);
+								} else {
+									alert("No data");
+								}
+							}
+
+						},
+						error : function(e) {
+							$("#pageloader").fadeOut();
+							alert("Error occured");
+							return;
+						}
+
+					});
+			/*]]>*/
+
+		}
+	</script>
+</body>
+</html>

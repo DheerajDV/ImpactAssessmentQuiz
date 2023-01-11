@@ -1,0 +1,57 @@
+package com.iocl.ImpactAssessmentQuiz.repository;
+
+import java.util.List;
+
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.query.Procedure;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.iocl.ImpactAssessmentQuiz.model.TrnQuizHeaderModel;
+
+public interface TrnQuizHeaderRepository extends CrudRepository<TrnQuizHeaderModel, Long> {
+
+	@Query(" from TrnQuizHeaderModel where employeeModel.emp_code=:emp_code and quiz_status='A' order by quiz_start_time desc ")
+	public List<TrnQuizHeaderModel> findActiveQuiz(@Param("emp_code") Long emp_code);
+
+	@Query(" from TrnQuizHeaderModel where employeeModel.emp_code=:emp_code and quiz_status='A' and  quiz_end_time>=systimestamp and quiz_start_time<=systimestamp and quiz_taken='Y'"
+			+ " and quiz_id not in (select old_quiz_id from TrnQuizResetLogModel)  order by quiz_start_time desc ")
+	public List<TrnQuizHeaderModel> findQuizListForReset(@Param("emp_code") Long emp_code);
+
+	@Query(" from TrnQuizHeaderModel where employeeModel.emp_code=:emp_code and quiz_status='A' and  quiz_end_time>=systimestamp and quiz_start_time<=systimestamp and quiz_taken='Y'"
+			+ " and  employeeModel.current_divn_cd=:div_code and quiz_id not in (select old_quiz_id from TrnQuizResetLogModel)  order by quiz_start_time desc ")
+	public List<TrnQuizHeaderModel> findDivQuizListForReset(@Param("emp_code") Long emp_code,
+			@Param("div_code") String div_code);
+
+	@Transactional
+	@Procedure(procedureName = "PROC_QUIZ_QUES_SELECTION")
+	public void callQuestionSelectionProc(@Param("input_quiz_id") Long quiz_id);
+
+	@Transactional
+	@Procedure(procedureName = "proc_calculate_result")
+	public void callGenerateResultProc();
+
+//	@Query(value = "CALL PROC_QUIZ_QUES_SELECTION(:quiz_id)", nativeQuery = true)
+//	public void callQuestionSelectionProc(@Param("quiz_id") Long quiz_id);
+
+	@Query(value = "SELECT\r\n" + "    quiz_id,\r\n" + "    employee_code,\r\n" + "    (\r\n" + "        SELECT\r\n"
+			+ "            emp_name\r\n" + "        FROM\r\n" + "            cem_view\r\n" + "        WHERE\r\n"
+			+ "            emp_code = a.employee_code\r\n" + "    ) employee_name,\r\n"
+			+ "    TO_CHAR(quiz_start_time,'DD-MM-YYYY hh:mi:ss AM') quiz_start_time,\r\n"
+			+ "    TO_CHAR(quiz_end_time,'DD-MM-YYYY hh:mi:ss AM') quiz_end_time,\r\n" + "    (\r\n"
+			+ "        SELECT\r\n" + "            COUNT(DISTINCT question_id)\r\n" + "        FROM\r\n"
+			+ "            trn_quiz_response\r\n" + "        WHERE\r\n" + "            quiz_id = a.quiz_id\r\n"
+			+ "            AND   emp_answer_flg = 'Y'\r\n" + "    ) attempted_ques\r\n" + "FROM\r\n"
+			+ "    trn_quiz_header a\r\n" + "WHERE\r\n" + "    quiz_id = :quiz_id", nativeQuery = true)
+	public Object[][] findQuizDet(@Param("quiz_id") Long quiz_id);
+
+	@Transactional
+	@Procedure(procedureName = "proc_quiz_reset")
+	public void callQuizResetProc(Long input_old_quiz_id, Long input_new_quiz_id, Long input_emp_code,
+			String input_old_quiz_retain_flg);
+
+	@Query(value = "select quiz_id.NEXTVAL from dual", nativeQuery = true)
+	public Long getQuizID();
+
+}

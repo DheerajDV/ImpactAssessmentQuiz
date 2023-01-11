@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <title>Swadhyaya Impact Assessment Quiz</title>
+    <script src="http://localhost:35729/livereload.js"></script>
+    <script type="module" th:src="@{/js/coursestable.js }"></script>
+
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui" name="viewport" />
+    <meta content="IE=edge" http-equiv="X-UA-Compatible" />
+    <meta
+            content="bootstrap, bootstrap admin template, admin theme, admin dashboard, dashboard template, admin template, responsive"
+            name="keywords" />
+    <meta content="Codedthemes" name="author" />
+    <!-- Favicon -->
+    <link rel="icon" th:href="@{/favicon.ico}">
+    </link>
+    <!-- Required Fremwork -->
+    <link rel="stylesheet" th:href="@{assets/css/bootstrap/css/bootstrap.min.css}" type="text/css" />
+
+    <!-- themify icon -->
+    <link rel="stylesheet" th:href="@{assets/icon/themify-icons/themify-icons.css}" type="text/css" />
+    <!-- font-awesome-n -->
+    <link rel="stylesheet" th:href="@{assets/css/font-awesome-n.min.css}" type="text/css" />
+    <link rel="stylesheet" th:href="@{assets/css/font-awesome.min.css}" type="text/css" />
+    <!-- scrollbar.css -->
+    <link rel="stylesheet" th:href="@{assets/css/jquery.mCustomScrollbar.css}" type="text/css" />
+    <!-- Style.css -->
+    <link rel="stylesheet" th:href="@{assets/css/style.css}" type="text/css" />
+    <!-- Required Jquery -->
+
+    <!-- Datatables  CSS -->
+    <link rel="stylesheet" th:href="@{/css/jquery.dataTables.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/buttons.dataTables.min.css}" />
+    <style>
+        #footerid {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            background-color: white;
+            color: black;
+        }
+
+        .card-title {
+            padding: 20px 0 15px 0;
+            font-size: 18px;
+            font-weight: 500;
+            color: #012970;
+            font-family: "Poppins", sans-serif;
+        }
+
+table th{
+font-size:1.3rem;
+text-align:center;
+
+font-weight:900;
+}
+table tbody{
+font-size:0.8rem;
+font-weight:200;
+}
+table{
+table-layout: auto;
+}
+.activities{
+cursor:pointer; text-decoration:underline; color:blue;
+}
+
+
+    </style>
+    <script th:src="@{/js/acquisitions.js}" type="module"></script>
+
+</head>
+
+<body>
+
+
+<div th:replace="../includes/preLoader :: preLoader"></div>
+<div class="pcoded" id="pcoded">
+    <div class="pcoded-overlay-box"></div>
+    <div class="pcoded-container navbar-wrapper">
+        <nav th:replace="../includes/emp_details :: emp_details"></nav>
+        <div class="pcoded-main-container">
+            <div class="pcoded-wrapper">
+                <nav th:replace="../includes/menuBar :: menuBar"></nav>
+                <div class="pcoded-content">
+                    <div class="pcoded-inner-content">
+                        <!-- Main-body start -->
+                        <div class="main-body">
+                            <div class="page-wrapper">
+                                <!-- Page-body start -->
+                                <div class="page-body">
+                                    <div class="row">
+                                        <div class="col-xl-1 col-md-1 text-center"></div>
+                                        <div class="col-xl-10 col-md-10 text-center">
+                                            <!--	<img class="img-fluid"
+                                            th:src="@{/image/login_image_3.jpeg}" />-->
+
+                                            <div class="row">
+
+                                                <div class="col-sm-4">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <h5 class="card-title">Total Courses Completed / Total Courses </h5>
+                                                            <!--   <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>-->
+                                                            <a data-toggle="modal" data-target="#complete"
+                                                               id="completed" class="btn btn-primary"
+                                                               href="#">[[${session.sessionMaster.mstDivisionListModel.emp_total_course_completed
+                                                                }]]</a>
+                                                            <a>/</a>
+                                                            <a data-toggle="modal" data-target="#complete_activity_list"
+                                                               id="completed_activity_list" class="btn btn-primary"
+                                                               href="#">[[${session.sessionMaster.mst_activity_list_count
+                                                                }]]</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-4">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <h5 class="card-title">Total Courses Passed</h5>
+                                                            <!--    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>-->
+                                                            <a data-toggle="modal" data-target="#pass"
+                                                               id="passed" class="btn btn-primary"
+                                                               href="#">[[${session.sessionMaster.mstDivisionListModel.emp_total_course_passed
+                                                                }]]</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-4">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <h5 class="card-title">Total Courses Failed</h5>
+
+                                                            <a data-toggle="modal" data-target="#fail"
+                                                               class="btn btn-primary"
+                                                               href="#">[[${session.sessionMaster.mstDivisionListModel.emp_total_course_failed
+                                                                }]]</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-sm-4">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <h5 class="card-title">Total Courses Completed
+                                                                Other Divisions</h5>
+                                                            <!--   <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>-->
+                                                            <a class="btn btn-primary" data-toggle="modal" data-target="#divcomplete"
+                                                               href="#">[[${session.sessionMaster.mstDivisionListModel.emp_courses_comp_other_div
+                                                                }]]</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-4">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <h5 class="card-title">Total Courses Passed Other
+                                                                Divisions</h5>
+                                                            <!--   <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>-->
+                                                            <a class="btn btn-primary" data-toggle="modal" data-target="#divpassed"
+                                                               href="#">[[${session.sessionMaster.mstDivisionListModel.emp_courses_pass_other_div
+                                                                }]]</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-4">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <h5 class="card-title">Total Courses Failed Other
+                                                                Divisions</h5>
+                                                            <!--   <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>-->
+                                                            <a class="btn btn-primary" data-toggle="modal" data-target="#divfailed"
+                                                               href="#">[[${session.sessionMaster.mstDivisionListModel.emp_courses_fail_other_div
+                                                                }]]</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12 grid-margin">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <div class="container-fluid">
+
+
+                                                                <label>Select month and
+                                                                    year</label>
+                                                                <select id='month'>
+                                                                    <option>--Select Month--</option>
+                                                                    <option value='1'>Janaury</option>
+                                                                    <option value='2'>February</option>
+                                                                    <option value='3'>March</option>
+                                                                    <option value='4'>April</option>
+                                                                    <option value='5'>May</option>
+                                                                    <option value='6'>June</option>
+                                                                    <option value='7'>July</option>
+                                                                    <option value='8'>August</option>
+                                                                    <option value='9'>September</option>
+                                                                    <option value='10'>October</option>
+                                                                    <option value='11'>November</option>
+                                                                    <option value='12'>December</option>
+                                                                </select>
+                                                                <select id='year'>
+                                                                    <option>--Select Month--</option>
+
+
+                                                                    <option value='2019'>2019</option>
+                                                                    <option value='2020'>2020</option>
+                                                                    <option value='2021'>2021</option>
+                                                                    <option value='2022'>2022</option>
+                                                                    <option value='2022'>2023</option>
+                                                                    <option value='2022'>2024</option>
+                                                                </select>
+
+
+                                                                <script>
+                                                                            var d = new Date();
+
+                                                                            document.getElementById("month").value = d.getMonth() + 1;
+                                                                            document.getElementById("year").value = d.getFullYear();
+
+                                                                        </script>
+                                                            </div>
+                                                            <div style="width:100%">
+                                                                <canvas id="acquisitions"></canvas>
+                                                            </div>
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+                                            <div class="row">
+                                                <div class="col-md-12 grid-margin">
+                                                    <div class="card">
+                                                        <div class="card-body">
+
+                                                            <div class=" ">
+                                                                <h3>Function Wise Course Completion
+                                                                    (Since
+                                                                    01.09.2019) :</h3>
+                                                                <!-- Table with stripped rows -->
+
+                                                                <table class="  display w-100  "
+                                                                       id="func_wise_course"  >
+
+                                                                    <thead class="w-100 ">
+                                                                    <tr >
+
+                                                                        <th class="text-center ">Function</th>
+                                                                        <th class="text-center ">No.of Courses
+                                                                            Completed</th>
+
+                                                                    </tr>
+
+                                                                    </thead>
+                                                                    <tbody>
+                                                                    <tr>
+
+                                                                        <td
+                                                                        >test</td>
+                                                                        <td
+                                                                        >gello</td>
+
+                                                                    </tr>
+                                                                    </tbody>
+                                                                </table>
+
+
+                                                                <!-- End Table with stripped rows -->
+
+
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <ul
+                                                    th:if="${session.sessionMaster.learning_group_flg=='Y'}">
+
+
+                                                <div class="row">
+                                                    <div class="col-md-12 grid-margin">
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                <div class="w-100">
+                                                                    <h3>Learning by Team</h3>
+                                                                    <!-- Table with stripped rows -->
+
+                                                                    <table
+                                                                            class="display w-100"
+                                                                            id="learning_by_team">
+                                                                        <thead class=" w-100  heads">
+                                                                        <tr>
+                                                                            <th class="text-center ">#</th>
+                                                                            <th class="text-center ">Employee Id</th>
+                                                                            <th class="text-center ">Employee Name
+                                                                            </th>
+                                                                            <th class="text-center ">Designation</th>
+                                                                            <th class="text-center ">Total Courses
+                                                                                completed
+                                                                            </th>
+                                                                            <th class="text-center ">Total Courses
+                                                                                passed
+                                                                            </th>
+                                                                            <th class="text-center ">Total courses Failed
+                                                                            </th>
+                                                                        </tr>
+
+                                                                        </thead>
+                                                                        <tbody>
+                                                                        <tr
+                                                                                th:each="learn_group,iterationStatus: ${session.sessionMaster.learning_group}">
+                                                                            <td
+                                                                                    th:text="${iterationStatus.count}"  />
+                                                                            <td
+                                                                                    class="id" >[[${learn_group.emp_id}]] </td>
+                                                                            <td
+                                                                                    th:text="${learn_group.emp_name}" />
+                                                                            <td
+                                                                                    th:text="${learn_group.emp_desg}" />
+                                                                            <td style="cursor:pointer; text-decoration:underline; color:blue;"
+                                                                            ><a  class="employee_completed" data-toggle="modal" data-target="#emp_com">[[${learn_group.emp_total_course_completed}]]
+                                                                            </a>
+                                                                            </td>
+                                                                            <td class="employee_passed" style="cursor:pointer; text-decoration:underline; color:blue;"
+                                                                            ><a   data-toggle="modal" data-target="#emp_pass">
+                                                                                [[${learn_group.emp_total_course_passed}]]</a></td>
+                                                                            <td   style="cursor:pointer; text-decoration:underline; color:blue;"
+                                                                            ><a class="employee_failed" data-toggle="modal" data-target="#emp_fail">
+                                                                                [[${learn_group.emp_total_course_failed}]]
+                                                                            </a></td>
+                                                                        </tr>
+                                                                        </tbody>
+                                                                    </table>
+
+
+                                                                    <!-- End Table with stripped rows -->
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </ul>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-div">
+        <div th:replace="../includes/footer :: footer"></div>
+    </div>
+</div>
+
+<script th:src="@{assets/js/jquery/jquery.min.js}" type="text/javascript"></script>
+<script th:src="@{assets/js/jquery-ui/jquery-ui.min.js} " type="text/javascript"></script>
+<script th:src="@{assets/js/popper.js/popper.min.js}" type="text/javascript"></script>
+<script th:src="@{assets/js/bootstrap/js/bootstrap.min.js} " type="text/javascript"></script>
+
+<!-- jquery slimscroll js -->
+<script th:src="@{assets/js/jquery-slimscroll/jquery.slimscroll.js}" type="text/javascript"></script>
+
+<!-- slimscroll js -->
+<script th:src="@{assets/js/jquery.mCustomScrollbar.concat.min.js} "></script>
+
+<!-- menu js -->
+<script th:src="@{assets/js/pcoded.min.js}"></script>
+<script th:src="@{assets/js/vertical/vertical-layout.min.js} "></script>
+<script th:src="@{assets/js/script.js} " type="text/javascript"></script>
+
+<!-- Datatable js -->
+<script th:src="@{/js/jquery.dataTables.min.js}" type="text/javascript"></script>
+<script th:src="@{/js/dataTables.buttons.min.js}" type="text/javascript"></script>
+<script th:src="@{/js/buttons.flash.min.js}" type="text/javascript"></script>
+<script th:src="@{/js/jszip.min.js}" type="text/javascript"></script>
+<script th:src="@{/js/pdfmake.min.js}" type="text/javascript"></script>
+<script th:src="@{/js/vfs_fonts.js}" type="text/javascript"></script>
+<script th:src="@{/js/jspdf.js}"></script>
+
+<script th:src="@{/js/buttons.html5.min.js}" type="text/javascript"></script>
+<script th:src="@{/js/buttons.print.min.js}" type="text/javascript"></script>
+
+<!-- - bar chart -->
+
+
+<div class="modal fade " id="fail" tabindex="-1"  role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered"   role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Failed Courses</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body w-100">
+                <table id="fail-table" class="display w-100   ">
+                    <thead class="w-100 heads">
+                    <tr>
+                        <th>Course Code</th>
+                        <th>Course Name</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="complete" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Completed Courses</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body  w-100 ">
+                <table id="complete-table" class="display w-100   ">
+                    <thead class=" w-100 heads">
+                    <tr>
+                        <th>Course Code</th>
+                        <th>Course Name</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Status</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="complete_activity_list" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Activity List</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body  w-100 ">
+                <table id="complete_activity_list-table" class="display w-100   ">
+                    <thead class=" w-100 heads">
+                    <tr>
+                        <th>Activity Code</th>
+                        <th>Activity Name</th>
+                        <th>LMS Upload Date</th>
+                        <th>Duration</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="pass" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Passed Courses</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table id="pass-table" class="display w-100  ">
+                    <thead class="w-100 heads">
+                    <tr>
+                        <th>Course Code</th>
+                        <th>Course Name</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="emp_com" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Completed Courses</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table id="emp_com-table" class="display w-100  ">
+                    <thead class="w-100 heads">
+                    <tr>
+                        <th>Course Code</th>
+                        <th>Course Name</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Status</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button id="emp_com_close" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="emp_pass" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Passed Courses</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table id="emp_pass-table" class="display w-100  ">
+                    <thead class="w-100 heads">
+                    <tr>
+                        <th>Course Code</th>
+                        <th>Course Name</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button id="emp_pass_close" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="emp_fail" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Failed Courses</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table id="emp_fail-table" class="display w-100  ">
+                    <thead class="w-100 heads">
+                    <tr>
+                        <th>Course Code</th>
+                        <th>Course Name</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button id="emp_failed_close" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" data-keyboard="false" data-backdrop="static" id="courses_list" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Courses</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table id="courses-table" class="display w-100  ">
+                    <thead class="w-100 heads">
+                    <tr>
+                        <th>Course Code</th>
+                        <th>Course Name</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button id="courses_close" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" data-keyboard="false" data-backdrop="static" id="divcomplete" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Division Courses Completed</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table id="div-courses-table" class="display w-100  ">
+                    <thead class="w-100 heads">
+                    <tr>
+                        <th >Course Code</th>
+                        <th>Course Name</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Status</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button id="div-courses_close" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" data-keyboard="false" data-backdrop="static" id="divpassed" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Division Courses Passed</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table id="div-pass-table" class="display w-100  ">
+                    <thead class="w-100 heads">
+                    <tr>
+                        <th>Course Code</th>
+                        <th>Course Name</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button id="div-pass_close" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" data-keyboard="false" data-backdrop="static" id="divfailed" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Division Courses Failed</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table id="div-fail-table" class="display w-100  ">
+                    <thead class="w-100 heads">
+                    <tr>
+                        <th>Course Code</th>
+                        <th>Course Name</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button id="div-fail_close" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script th:inline="javascript">
+
+
+$(document).ready(function() {
+
+
+    var func_table = $('#func_wise_course').DataTable({
+        dom: 'Bfrtip',
+           data:[[${session.sessionMaster.function_wise_course_list}]],
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ],
+
+        lengthMenu: [
+            [5, 10],
+            ['10 rows', '25 rows',
+                '50 rows',
+                'Show all'
+            ]
+        ],
+        columns: [{
+                data: 'domain',
+                className: 'domain'
+            },
+            {
+                data: 'no_of_courses',
+                className: 'activities'
+            },
+
+
+        ],
+
+
+    });
+    $('#func_wise_course thead th').removeClass('activities');
+
+
+
+    var learn_table = $('#learning_by_team').DataTable({
+        dom: 'Bfrtip',
+
+        buttons: [
+            'copy', 'csv', 'excel', 'pdf', 'print'
+        ],
+
+
+        lengthMenu: [
+            [5, 10],
+            ['10 rows', '25 rows',
+                '50 rows',
+                'Show all'
+            ]
+        ],
+    });
+    learn_table.on('draw', emp_tables);
+    $.get("Courses/fail", function(data, status) {
+
+        $('#fail-table').DataTable({
+            dom: 'Bfrtip',
+            // options
+            data: data,
+            columns: [{
+                    data: 'course_code'
+                },
+                {
+                    data: 'course_name'
+                },
+                {
+                    data: 'begin_date'
+                },
+                {
+                    data: 'completion_date'
+                }
+            ],
+            buttons: [
+                'copy', 'excel', 'pdf'
+            ],
+
+            lengthMenu: [
+                [5, 10],
+                ['10 rows', '25 rows',
+                    '50 rows',
+                    'Show all'
+                ]
+            ],
+            // 								"columnDefs" : [ {
+            // 									"width" : "300px",
+            // 									"targets" : 8
+            // 								} ],
+
+
+
+        });
+
+    });
+    $.get("Courses/pass", function(data, status) {
+
+        $('#pass-table').DataTable({
+            dom: 'Bfrtip',
+            // options
+            data: data,
+            columns: [{
+                    data: 'course_code'
+                },
+                {
+                    data: 'course_name'
+                },
+                {
+                    data: 'begin_date'
+                },
+                {
+                    data: 'completion_date'
+                }
+            ],
+            buttons: [
+                'copy', 'excel', 'pdf'
+            ],
+
+            lengthMenu: [
+                [5, 10],
+                ['10 rows', '25 rows',
+                    '50 rows',
+                    'Show all'
+                ]
+            ],
+            // 								"columnDefs" : [ {
+            // 									"width" : "300px",
+            // 									"targets" : 8
+            // 								} ],
+
+
+
+        });
+
+    });
+    $.get("Courses", function(data, status) {
+
+        $('#complete-table').DataTable({
+            dom: 'Bfrtip',
+            // options
+            data: data,
+            columns: [{
+                    data: 'course_code'
+                },
+                {
+                    data: 'course_name'
+                },
+                {
+                    data: 'begin_date'
+                },
+                {
+                    data: 'completion_date'
+                },
+                {
+                    data: 'status'
+                }
+            ],
+            buttons: [
+                'copy', 'excel', 'pdf'
+            ],
+
+            lengthMenu: [
+                [5, 10],
+                ['10 rows', '25 rows',
+                    '50 rows',
+                    'Show all'
+                ]
+            ],
+            // 								"columnDefs" : [ {
+            // 									"width" : "300px",
+            // 									"targets" : 8
+            // 								} ],
+
+
+
+        });
+
+    });
+
+
+ $.get("CompleteActivityList", function(data, status) {
+console.log(data)
+        $('#complete_activity_list-table').DataTable({
+            dom: 'Bfrtip',
+            // options
+            data: data,
+            columns: [{
+                    data: 'activity_code'
+                },
+                {
+                    data: 'activity_name'
+                },
+                {
+                    data: 'lms_upload_date'
+                },
+                {
+                    data: 'duration'
+                }
+            ],
+            buttons: [
+                'copy', 'excel', 'pdf'
+            ],
+
+            lengthMenu: [
+                [10],
+                ['10 rows', '25 rows',
+                    '50 rows',
+                    'Show all'
+                ]
+            ],
+            // 								"columnDefs" : [ {
+            // 									"width" : "300px",
+            // 									"targets" : 8
+            // 								} ],
+
+
+
+        });
+
+    });
+
+
+
+
+
+
+
+
+$.get("Divcourses", function(data, status) {
+
+ $('#div-courses-table').DataTable({
+            dom: 'Bfrtip',
+            // options
+            data: data,
+            columns: [{
+                    data: 'course_code'
+                },
+                {
+                    data: 'course_name'
+                },
+                {
+                    data: 'begin_date'
+                },
+                {
+                    data: 'completion_date'
+                },
+                {
+                    data: 'status'
+                }
+            ],
+            buttons: [
+                'copy', 'excel', 'pdf'
+            ],
+
+            lengthMenu: [
+                [5, 10],
+                ['10 rows', '25 rows',
+                    '50 rows',
+                    'Show all'
+                ]
+            ],
+            // 								"columnDefs" : [ {
+            // 									"width" : "300px",
+            // 									"targets" : 8
+            // 								} ],
+
+
+
+        });
+});
+$.get("Divcourses/Pass", function(data, status) {
+<!--console.log(data)-->
+ $('#div-pass-table').DataTable({
+            dom: 'Bfrtip',
+            // options
+            data: data,
+            columns: [{
+                    data: 'course_code'
+                },
+                {
+                    data: 'course_name'
+                },
+                {
+                    data: 'begin_date'
+                },
+                {
+                    data: 'completion_date'
+                },
+            ],
+            buttons: [
+                'copy', 'excel', 'pdf'
+            ],
+
+            lengthMenu: [
+                [5, 10],
+                ['10 rows', '25 rows',
+                    '50 rows',
+                    'Show all'
+                ]
+            ],
+            // 								"columnDefs" : [ {
+            // 									"width" : "300px",
+            // 									"targets" : 8
+            // 								} ],
+
+
+
+        });
+});
+$.get("Divcourses/Fail", function(data, status) {
+console.log(data)
+ $('#div-fail-table').DataTable({
+            dom: 'Bfrtip',
+            // options
+            data: data,
+            columns: [{
+                    data: 'course_code'
+                },
+                {
+                    data: 'course_name'
+                },
+                {
+                    data: 'begin_date'
+                },
+                {
+                    data: 'completion_date'
+                },
+            ],
+            buttons: [
+                'copy', 'excel', 'pdf'
+            ],
+
+            lengthMenu: [
+                [5, 10],
+                ['10 rows', '25 rows',
+                    '50 rows',
+                    'Show all'
+                ]
+            ],
+            // 								"columnDefs" : [ {
+            // 									"width" : "300px",
+            // 									"targets" : 8
+            // 								} ],
+
+
+
+        });
+});
+
+    ////////////////////////////////////////////////////////////////////////////////
+
+
+    function emp_tables() {
+        $(".employee_failed").click(function() {
+            var $row = $(this).closest("tr"); // Find the row
+            var text = $row.find(".id").text(); // Find the text
+
+
+            $.get(`Courses/fail/${text}`, function(data, status) {
+
+                var table = $('#emp_fail-table').DataTable({
+                    dom: 'Bfrtip',
+                    // options
+                    data: data,
+                    columns: [{
+                            data: 'course_code'
+                        },
+                        {
+                            data: 'course_name'
+                        },
+                        {
+                            data: 'begin_date'
+                        },
+                        {
+                            data: 'completion_date'
+                        },
+
+                    ],
+                    buttons: [
+                        'copy', 'excel', 'pdf'
+                    ],
+
+                    lengthMenu: [
+                        [5, 10],
+                        ['10 rows', '25 rows',
+                            '50 rows',
+                            'Show all'
+                        ]
+                    ],
+                    // 								"columnDefs" : [ {
+                    // 									"width" : "300px",
+                    // 									"targets" : 8
+                    // 								} ],
+
+
+
+                });
+                $('#emp_failed_close').on('click', function() {
+                    table.clear()
+                    table.destroy()
+                });
+            });
+        });
+        $(".employee_passed").click(function() {
+            var $row = $(this).closest("tr"); // Find the row
+            var text = $row.find(".id").text(); // Find the text
+
+
+            $.get(`Courses/pass/${text}`, function(data, status) {
+
+                var table = $('#emp_pass-table').DataTable({
+                    dom: 'Bfrtip',
+                    // options
+                    data: data,
+                    columns: [{
+                            data: 'course_code'
+                        },
+                        {
+                            data: 'course_name'
+                        },
+                        {
+                            data: 'begin_date'
+                        },
+                        {
+                            data: 'completion_date'
+                        },
+
+                    ],
+                    buttons: [
+                        'copy', 'excel', 'pdf'
+                    ],
+
+                    lengthMenu: [
+                        [5, 10],
+                        ['10 rows', '25 rows',
+                            '50 rows',
+                            'Show all'
+                        ]
+                    ],
+                    // 								"columnDefs" : [ {
+                    // 									"width" : "300px",
+                    // 									"targets" : 8
+                    // 								} ],
+
+
+
+                });
+                $('#emp_pass_close').on('click', function() {
+                    table.clear()
+                    table.destroy()
+                });
+            });
+        });
+        $(".employee_completed").click(function() {
+            var $row = $(this).closest("tr"); // Find the row
+            var text = $row.find(".id").text(); // Find the text
+
+
+            $.get(`Courses/id=${text}`, function(data, status) {
+
+                var table = $('#emp_com-table').DataTable({
+                    dom: 'Bfrtip',
+                    // options
+                    data: data,
+                    columns: [{
+                            data: 'course_code'
+                        },
+                        {
+                            data: 'course_name'
+                        },
+                        {
+                            data: 'begin_date'
+                        },
+                        {
+                            data: 'completion_date'
+                        },
+                        {
+                            data: 'status'
+                        },
+
+                    ],
+                    buttons: [
+                        'copy', 'excel', 'pdf'
+                    ],
+
+                    lengthMenu: [
+                        [5, 10],
+                        ['10 rows', '25 rows',
+                            '50 rows',
+                            'Show all'
+                        ]
+                    ],
+                    // 								"columnDefs" : [ {
+                    // 									"width" : "300px",
+                    // 									"targets" : 8
+                    // 								} ],
+
+
+
+                });
+                $('#emp_com_close').on('click', function() {
+                    table.clear()
+                    table.destroy()
+                });
+            });
+        });
+    }
+    emp_tables();
+    ///
+    function function_wise_table() {
+        $(".activities").click(function() {
+
+            var $row = $(this).closest("tr"); // Find the row
+            var text = $row.find(".domain").text(); // Find the text
+
+
+
+            $.get(`Courses/list/${text}`, function(data, status) {
+
+                var table = $('#courses-table').DataTable({
+                    dom: 'Bfrtip',
+
+                    // options
+                    data: data,
+                    columns: [{
+                            data: 'course_code'
+                        },
+                        {
+                            data: 'course_name'
+                        }
+
+                    ],
+
+                    buttons: [
+                        'copy', 'excel', 'pdf'
+                    ],
+
+                    lengthMenu: [
+                        [5, 10],
+                        ['10 rows', '25 rows',
+                            '50 rows',
+                            'Show all'
+                        ]
+                    ],
+                    // 								"columnDefs" : [ {
+                    // 									"width" : "300px",
+                    // 									"targets" : 8
+                    // 								} ],
+
+
+
+                });
+                $('#courses_list').modal('toggle')
+
+                $('#courses_close').on('click', function() {
+                    table.clear()
+                    table.destroy()
+                });
+            });
+        });
+    }
+    func_table.on('draw', function_wise_table);
+   function_wise_table();
+    /////////////////////////////////////////////////////////
+});
+
+
+
+                </script>
+
+</body>
+
+</html>

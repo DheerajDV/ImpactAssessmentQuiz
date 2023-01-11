@@ -1,0 +1,9 @@
+package com.iocl.ImpactAssessmentQuiz.repository;
+
+import org.springframework.data.repository.CrudRepository;
+
+import com.iocl.ImpactAssessmentQuiz.model.MstAdminModel;
+
+public interface MstAdminRepository extends CrudRepository<MstAdminModel, Long> {
+
+}

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<title>Employee Login</title>
+<link rel="icon" th:href="@{/favicon.ico}"></link>
+<link th:href="@{/css/bootstrap.min.css}" rel=" stylesheet" />
+<link href="https://fonts.googleapis.com/css?family=Forum"
+	rel="stylesheet" />
+
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<style type="text/css" th:inline="text">
+
+/* input::-webkit-input-placeholder { */
+/* 	font-size: 12px; */
+/* 	line-height: 3; */
+/* } */
+.login-form {
+	margin-top: 5%;
+	background: white;
+}
+
+.login-form form {
+	margin-bottom: 15px;
+	box-shadow: 12px 15px 22px rgba(0, 0, 0, 0.3);
+}
+
+.login-form h2 {
+	margin: 0 0 15px;
+}
+
+.form-control, .btn {
+	min-height: 38px;
+	border-radius: 2px;
+}
+
+.input-group-addon .fa {
+	font-size: 18px;
+}
+
+.btn {
+	font-size: 15px;
+	font-weight: bold;
+}
+
+#footerid {
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	text-align: center;
+	background-color: white;
+	color: black;
+}
+
+.input-group {
+	padding-right: 10px;
+	padding-left: 10px;
+}
+</style>
+</head>
+<body>
+	<div class="container-fluid "
+		style="padding-right: 0; padding-left: 0;">
+		<div th:replace="../includes/loginHeader :: loginHeader"></div>
+	</div>
+
+	<div class="login-form container-fluid form-horizontal">
+		<div class="row ">
+			<div class="col-1"></div>
+			<div class="col-6 text-center ">
+				<img class="img-fluid" th:src="@{/image/home_image_2.jpeg}" />
+			</div>
+			<div class="col-1"></div>
+			<div class="col-3 ">
+				<form th:action="@{/login}" id="loginform" name="loginform"
+					method="post" style="width: 350px;" class="justify-content-center">
+					<h2 class="text-center border-bottom"
+						style="padding: 7px; font-size: 20px;">LOGIN</h2>
+					<div class="form-group mx-2">
+						<label for="userid">Employee Code</label> <input type="text"
+							class="form-control" placeholder="Enter 8 digit Employee Code"
+							name="uname" id="userid" required="required" />
+
+					</div>
+					<div class="form-group mx-2">
+						<label for="upassid">Password</label><input type="password"
+							class="form-control" placeholder="Enter ESS password."
+							name="upass" id="upassid" required="required" />
+
+					</div>
+					<div class="form-group mx-2">
+						<img alt="Captch" id="captchaImage" th:src="@{/get-captcha}"
+							style="width: 100%" />
+					</div>
+					<div class="form-group mx-2">
+						<input type="text" id='captchaText1' name="captchaText"
+							placeholder="Enter Captcha text" required="required"
+							style="margin-left: 10px;" /> <a onClick="refreshCaptcha()"><img
+							th:src="@{/image/Refresh.jpg}" height="25" width="25" /></a>
+					</div>
+
+					<div class="form-group text-center mb-md-2 mx-2">
+						<button type="submit" class="btn btn-primary mb-2">Log in</button>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="row ">
+			<div class="col-1"></div>
+			<div class="col-6"></div>
+			<div class="col-1"></div>
+			<div class="col-3">
+				<strong><span th:if="${message != null}" id="toast"
+					style="color: red; margin-left: 75px; font-size: 20px;"
+					th:text="${message}"></span></strong>
+			</div>
+			<!-- 			<div class="footer-div"> -->
+			<!-- 				<div th:replace="../includes/footer :: footer"></div> -->
+			<!-- 			</div> -->
+		</div>
+		<div class="row ">
+			<div class="col-12 text-center"
+				style="position: fixed; bottom: 48px;">
+				<strong><span style="color: red; font-size: 17px;">Please
+						note that portal works best in Google Chrome</span></strong>
+			</div>
+			<div class="footer-div">
+				<div th:replace="../includes/footer :: footer"></div>
+			</div>
+		</div>
+	</div>
+	<script th:inline="javascript">
+		function refreshCaptcha() {
+			var timestamp = (new Date()).getTime();
+			var newSrc = $("#captchaImage").attr("src").split("?");
+			newSrc = newSrc[0] + "?time=" + timestamp;
+			$("#captchaImage").attr("src", newSrc);
+			$("#captchaImage").slideDown("fast");
+
+		}
+		$(document).ready(function() {
+			setTimeout(function() {
+				$('#toast').fadeOut('fast');
+			}, 2000);
+		});
+	</script>
+</body>
+</html>

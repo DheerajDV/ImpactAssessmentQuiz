@@ -1,0 +1,67 @@
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title></title>
+<link rel="icon" th:href="@{/favicon.ico}" />
+</head>
+<body>
+	<nav th:fragment="menuBar" class="pcoded-navbar">
+		<div class="sidebar_toggle">
+			<a href="#"><i class="icon-close icons"></i></a>
+		</div>
+		<div class="pcoded-inner-navbar main-menu">
+			<ul class="pcoded-item pcoded-left-item">
+				<li class="active"><a th:href="@{/Home}"
+					class="waves-effect waves-dark"> <span class="pcoded-micon"><i
+							class="ti-home"></i><b>D</b></span> <span class="pcoded-mtext">Dashboard</span>
+						<span class="pcoded-mcaret"></span>
+				</a></li>
+			</ul>
+			<ul th:if="${session.sessionMaster.admin_flg=='Y'}"
+				class="pcoded-item pcoded-left-item">
+				<li class="pcoded-hasmenu"><a href="javascript:void(0)"
+					class="waves-effect waves-dark"> <span class="pcoded-micon"><i
+							class=""></i><b>M</b></span> <span class="pcoded-mtext">Admin</span> <span
+						class="pcoded-mcaret"></span>
+				</a>
+					<ul class="pcoded-submenu">
+						<li class=" "><a th:href="@{/QuizResultHeader}"
+							class="waves-effect waves-dark"> <span class="pcoded-micon"><i
+									class="ti-angle-right"></i></span> <span class="pcoded-mtext">Quiz
+									Result</span> <span class="pcoded-mcaret"></span>
+						</a></li>
+						<li class=" "><a th:href="@{/QuizResultDetails}"
+							class="waves-effect waves-dark"> <span class="pcoded-micon"><i
+									class="ti-angle-right"></i></span> <span class="pcoded-mtext">Quiz
+									Result Details </span> <span class="pcoded-mcaret"></span>
+						</a></li>
+						<li class=" "><a th:href="@{/QuizReset}"
+							class="waves-effect waves-dark"> <span class="pcoded-micon"><i
+									class="ti-angle-right"></i></span> <span class="pcoded-mtext">Quiz
+									Reset</span> <span class="pcoded-mcaret"></span>
+						</a></li>
+
+
+					</ul></li>
+			</ul>
+			<ul class="pcoded-item pcoded-left-item">
+				<li class="pcoded-hasmenu"><a href="javascript:void(0)"
+					class="waves-effect waves-dark"> <span class="pcoded-micon"><i
+							class=""></i><b>M</b></span> <span class="pcoded-mtext">Assessment
+							Quiz</span> <span class="pcoded-mcaret"></span>
+				</a>
+					<ul class="pcoded-submenu">
+						<li class=" "><a th:href="@{/TakeQuiz}"
+							class="waves-effect waves-dark"> <span class="pcoded-micon"><i
+									class="ti-angle-right"></i></span> <span class="pcoded-mtext">Take
+									Assessment Quiz</span> <span class="pcoded-mcaret"></span>
+						</a></li>
+
+
+					</ul></li>
+			</ul>
+		</div>
+	</nav>
+</body>
+</html>

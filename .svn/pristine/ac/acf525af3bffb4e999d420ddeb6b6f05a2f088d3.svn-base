@@ -1,0 +1,121 @@
+package com.iocl.ImpactAssessmentQuiz.login;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+//import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+//import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.iocl.ImpactAssessmentQuiz.model.EmployeeModel;
+import com.iocl.ImpactAssessmentQuiz.model.MstAdminModel;
+import com.iocl.ImpactAssessmentQuiz.model.SessionMaster;
+import com.iocl.ImpactAssessmentQuiz.service.EmployeeService;
+import com.iocl.ImpactAssessmentQuiz.service.LoginService;
+import com.iocl.ImpactAssessmentQuiz.service.MstAdminService;
+
+@Controller
+@Scope("session")
+public class LoginController {
+
+//	@Value("${rsa.public}")
+//	private String magicalWord;
+
+//	@Autowired
+//	AuthenticationManager authenticationManager;
+
+	@Autowired
+	EmployeeService employeeService;
+
+	@Autowired
+	LoginService loginService;
+
+	@Autowired
+	MstAdminService mstAdminService;
+
+	@ModelAttribute("sessionMaster")
+	public SessionMaster setUpSessionMaster() {
+		return new SessionMaster();
+	}
+
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public ModelAndView login(@RequestParam("uname") String uname, @RequestParam("upass") String upass,
+			@RequestParam("captchaText") String captchaText, HttpServletRequest request,
+
+			@SessionAttribute("sessionMaster") SessionMaster sessionMaster, HttpSession session,
+			final RedirectAttributes redirectAttributes) {
+
+		System.out.println("Employee iD :- " + uname);
+
+		try {
+			String capAns = sessionMaster.getCaptchaAnswer();
+			System.out.println("Captcha :- " + captchaText);
+			long authId = 0L;
+
+			try {
+				authId = Long.parseLong(uname);
+
+			} catch (Exception ee) {
+				authId = 0L;
+			}
+			ADAuthentication authenticate = new ADAuthentication();
+			boolean isValidUser = authenticate.Authenticate(uname, upass);
+
+//			Authentication authentication = null;
+//			try {
+//				authentication = authenticationManager
+//						.authenticate(new UsernamePasswordAuthenticationToken(uname, upass));
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//				redirectAttributes.addFlashAttribute("message", "Invalid Credentials");
+//				return new ModelAndView("redirect:/");
+//			}
+
+//			if (authentication != null && authentication.isAuthenticated()) {
+			if (isValidUser == true) {
+				System.out.println("Authentication Successful");
+				EmployeeModel employee = loginService.findEmpDetails(authId);
+				if (employee != null) {
+					MstAdminModel mstAdminModel = mstAdminService.findOne(employee.getEmp_code());
+					if (mstAdminModel != null) {
+						sessionMaster.setAdmin_flg("Y");
+					} else {
+						sessionMaster.setAdmin_flg("N");
+					}
+
+					if (capAns.equals(captchaText)) {
+
+						sessionMaster.setEmployeeModel(employee);
+						sessionMaster.setHost(request.getServerName());
+						session.setAttribute("sessionMaster", sessionMaster);
+						session.setMaxInactiveInterval(30 * 60);
+						/* return "redirect:/Home"; */
+//						return "dashboard_home";
+						return new ModelAndView("redirect:/Home");
+
+					} else {
+						redirectAttributes.addFlashAttribute("message", "Invalid Captcha");
+					}
+				} else {
+					redirectAttributes.addFlashAttribute("message", "Not Authorised");
+				}
+			} else {
+				redirectAttributes.addFlashAttribute("message", "Invalid Credentials");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new ModelAndView("redirect:/");
+	}
+
+}

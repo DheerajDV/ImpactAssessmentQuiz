@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Swadhyaya Impact Assessment Quiz</title>
+<link rel="stylesheet" type="text/css"
+	th:href="@{assets/css/bootstrap/css/bootstrap.min.css}" />
+<script type="text/javascript"
+	th:src="@{assets/js/jquery/jquery.min.js}"></script>
+<script type="text/javascript"
+	th:src="@{assets/js/bootstrap/js/bootstrap.min.js} "></script>
+</head>
+<style type="text/css">
+#submitButton {
+	color: white;
+	border: 1px solid rgba(243, 112, 34, 1);
+	background-color: rgba(243, 112, 34, 1);
+	font-size: 12px;
+	padding: 6px;
+	font-weight: 600;
+	border-radius: 0px;
+	background-color: rgba(243, 112, 34, 1);
+}
+
+#instructionForm {
+	font-family: Helvetica;
+	width: 100%;
+	height: 900px;
+	overflow: hidden;
+	display: block;
+	position: relative;
+}
+
+#instructionForm::after {
+	content: "";
+	background-size: cover;
+	height: 100%;
+	opacity: 0.5;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	position: absolute;
+	z-index: -1;
+}
+
+.panel-default>.panel-heading {
+	background-color: #06154e;
+	color: white;
+	padding: 5px;
+	font-weight: 800;
+	font-size: 20px;
+	font-weight: 800;
+}
+
+.panel-default>.panel-body {
+	padding: 35px;
+}
+
+.panel-default {
+	border: solid 1px;
+	border-color: #06154e;
+	margin-bottom: 5px;
+	border-radius: 5px;
+	height: 500px;
+	overflow-y: auto;
+	margin-top: 100px;
+	border-radius: 5px;
+	border-radius: 5px;
+}
+</style>
+<body style="box-shadow: inset 0 15px 20px -7px rgba(217, 209, 206, 1);">
+	<div id="instructionForm">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-1 col-sm-1 col-md-2 col-lg-3">&nbsp;</div>
+				<div class="col-xs-10 col-sm-10 col-md-6 col-lg-6">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<b>Instructions</b>
+						</div>
+						<div class="panel-body">
+
+							<p th:each="data,i : ${instrctions}" style="font-size: 16px;"
+								th:styleappend="'color:' + ${i.index==4?'red':'black'}"
+								th:inline="text">[[${data.seq+'.'+data.instruction}]]</p>
+							<p>
+								<input type="checkbox" id="checkbox" value="Y"> <label
+									style="font-size: 16px" for="vehicle1"> I have read and
+									understood the instructions</label>
+							</p>
+
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-1 col-sm-1 col-md-3 col-lg-3">&nbsp;</div>
+			</div>
+		</div>
+		<div class="container-fluid">
+			<div class="row">
+				<div
+					class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center center-block">
+					<button class="btn btn-warning" id="submitButton"
+						onclick="start_quiz();" disabled="disabled">START QUIZ</button>
+					<br></br>
+					<p th:if="${message!=null}" style="color: red;" th:inline="text">[[${message}]]</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<form name="submitForm" method="post" th:action="@{/StartQuiz}">
+		<input type="hidden" id="quiz_id" name="quiz_id" />
+	</form>
+	<script th:inline="text">
+	
+	 	$('#checkbox').change(function() {
+	        if(this.checked) {
+	            $('#submitButton').removeAttr("disabled");
+	        }else{
+	        	 $('#submitButton').prop("disabled","disabled");
+	        }
+	 	});
+	
+			
+		function start_quiz() {
+			
+			var quiz_taken="N";
+			var quiz_expired="N";
+
+			/*<![CDATA[*/
+			$.ajax({
+				url : "checkQuizStatus",
+				method : "post",
+				async : false,
+				data : {
+					quiz_id : [[${quiz_id}]]
+				},
+				success : function(data) {
+					if (data!=null && data=='Y') {
+						quiz_taken="Y";
+					}
+
+				},
+				error : function(e) {
+					alert("Error occured");
+					return;
+				}
+
+			});
+			/*]]>*/
+			/*<![CDATA[*/
+			$.ajax({
+				url : "checkQuizExpiryStatus",
+				method : "post",
+				async : false,
+				data : {
+					quiz_id : [[${quiz_id}]]
+				},
+				success : function(data) {
+					if (data!=null && data=='Y') {
+						
+						quiz_expired="Y";
+					}
+
+				},
+				error : function(e) {
+					alert("Error occured");
+					return;
+				}
+
+			});
+			/*]]>*/
+
+			if(quiz_taken=='Y'){
+				alert("Quiz already taken");
+				return false;
+				
+			}
+			if(quiz_expired=='Y'){
+				alert("Quiz no longer active");
+				return false;
+				
+			}
+			$('#quiz_id').val([[${quiz_id}]]);
+			document.submitForm.submit();
+
+		}
+	</script>
+</body>
+
+</html>

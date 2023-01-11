@@ -1,0 +1,13 @@
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:th="http://www.thymeleaf.org">
+
+
+<div th:fragment="header">
+	<footer style="background-color: #06154e; color: white;" id="footerid"
+		class="blog-footer">
+		<p>&copy; Developed and maintained by IS Department, Marketing
+			Division</p>
+
+	</footer>
+</div>
+</html>

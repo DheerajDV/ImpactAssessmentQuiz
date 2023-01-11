@@ -1,0 +1,38 @@
+package com.iocl.ImpactAssessmentQuiz.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.iocl.ImpactAssessmentQuiz.model.MstActivityListModel;
+import com.iocl.ImpactAssessmentQuiz.repository.MstActivityListRepository;
+
+@Service
+public class MstActivityListService {
+
+	@Autowired
+	MstActivityListRepository MstActivityListRepository;
+
+	public ArrayList<String> getDivisionList() {
+		return MstActivityListRepository.getDivisionList();
+	}
+
+	public ArrayList<String> getDomainList(String division) {
+		return MstActivityListRepository.getDomainList(division);
+	}
+
+	public ArrayList<String> getSubDomainList(String division, String domain) {
+		return MstActivityListRepository.getSubDomainList(division, domain);
+	}
+
+	public List<MstActivityListModel> getModuleList(String division, String domain, String sub_domain) {
+		return MstActivityListRepository.getModuleList(division, domain, sub_domain);
+	}
+
+	public MstActivityListModel findActivityCode(String activity_code) {
+		return MstActivityListRepository.findById(activity_code).orElse(null);
+	}
+
+}

@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Swadhyaya Impact Assessment Quiz</title>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="keywords"
+	content="bootstrap, bootstrap admin template, admin theme, admin dashboard, dashboard template, admin template, responsive" />
+<meta name="author" content="Codedthemes" />
+<!-- Favicon -->
+<link rel="icon" th:href="@{/favicon.ico}"></link>
+<!-- Required Fremwork -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{assets/css/bootstrap/css/bootstrap.min.css}" />
+
+<!-- themify icon -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{assets/icon/themify-icons/themify-icons.css}" />
+<!-- font-awesome-n -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{assets/css/font-awesome-n.min.css}" />
+<link rel="stylesheet" type="text/css"
+	th:href="@{assets/css/font-awesome.min.css}" />
+<!-- scrollbar.css -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{assets/css/jquery.mCustomScrollbar.css}" />
+<!-- Style.css -->
+<link rel="stylesheet" type="text/css" th:href="@{assets/css/style.css}" />
+<!-- Required Jquery -->
+<style>
+#footerid {
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	text-align: center;
+	background-color: white;
+	color: black;
+}
+</style>
+</head>
+<body>
+	<div>
+		<div th:replace="../includes/preLoader :: preLoader"></div>
+		<div id="pcoded" class="pcoded">
+			<div class="pcoded-overlay-box"></div>
+			<div class="pcoded-container navbar-wrapper">
+				<nav th:replace="../includes/emp_details :: emp_details"></nav>
+				<div class="pcoded-main-container">
+					<div class="pcoded-wrapper">
+						<nav th:replace="../includes/menuBar :: menuBar"></nav>
+						<div class="pcoded-content">
+							<div class="pcoded-inner-content">
+								<!-- Main-body start -->
+								<div class="main-body">
+									<div class="page-wrapper">
+										<!-- Page-body start -->
+										<div class="page-body">
+											<div class="row">
+												<div class="col-xl-1 col-md-1 text-center"></div>
+												<div class="col-xl-10 col-md-10 text-center">
+													<img class="img-fluid"
+														th:src="@{/image/login_image_3.jpeg}" />
+												</div>
+												<div class="col-xl-1 col-md-1 text-center"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="footer-div">
+			<div th:replace="../includes/footer :: footer"></div>
+		</div>
+	</div>
+	<script type="text/javascript"
+		th:src="@{assets/js/jquery/jquery.min.js}"></script>
+	<script type="text/javascript"
+		th:src="@{assets/js/jquery-ui/jquery-ui.min.js} "></script>
+	<script type="text/javascript"
+		th:src="@{assets/js/popper.js/popper.min.js}"></script>
+	<script type="text/javascript"
+		th:src="@{assets/js/bootstrap/js/bootstrap.min.js} "></script>
+
+	<!-- jquery slimscroll js -->
+	<script type="text/javascript"
+		th:src="@{assets/js/jquery-slimscroll/jquery.slimscroll.js}"></script>
+
+	<!-- slimscroll js -->
+	<script th:src="@{assets/js/jquery.mCustomScrollbar.concat.min.js} "></script>
+
+	<!-- menu js -->
+	<script th:src="@{assets/js/pcoded.min.js}"></script>
+	<script th:src="@{assets/js/vertical/vertical-layout.min.js} "></script>
+	<script type="text/javascript" th:src="@{assets/js/script.js} "></script>
+</body>
+</html>

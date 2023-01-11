@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1"></meta>
+<title>Insert title here</title>
+</head>
+<body>
+	<nav th:fragment="emp_details"
+		class="navbar header-navbar pcoded-header">
+		<div class="navbar-wrapper">
+			<div class="navbar-logo">
+				<a class="mobile-menu waves-effect waves-light" id="mobile-collapse"
+					href="#!"> <i class="ti-menu"></i>
+				</a>
+				<div class="mobile-search waves-effect waves-light">
+					<div class="header-search">
+						<div class="main-search morphsearch-search">
+							<div class="input-group">
+								<span class="input-group-prepend search-close"><i
+									class="ti-close input-group-text"></i></span> <input type="text"
+									class="form-control" placeholder="Enter Keyword" /> <span
+									class="input-group-append search-btn"><i
+									class="ti-search input-group-text"></i></span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<a th:href="@{/Home}"> <img class="img-fluid"
+					th:src="@{/image/swadhyaya_logo.jpg}" style="width: 122px;"
+					alt="Theme-Logo" />
+				</a> <a class="mobile-options waves-effect waves-light"> <i
+					class="ti-more"></i>
+				</a>
+			</div>
+			<div class="navbar-container container-fluid">
+				<ul class="nav-left">
+					<li>
+						<div class="sidebar_toggle">
+							<a href="javascript:void(0)"><i class="ti-menu"></i></a>
+						</div>
+					</li>
+				</ul>
+				<ul class="nav-left">
+					<li>
+						<h2
+							style="margin-top: 3px; font-family: 'Lobster'; width: inherit;">
+							<b style="font-family: 'Forum'; color: white;"> Swadhyaya
+								Impact Assessment Quiz </b>
+						</h2>
+
+					</li>
+				</ul>
+
+				<ul class="nav-right">
+					<li class="header-notification"></li>
+					<li class="user-profile header-notification"><a href="#!"
+						class="waves-effect waves-light"> <!--<img src="https://xsparsh.indianoil.in/APIManager/empphoto/<!%=emp_code%>.jpg" class="img-radius" alt="User-Profile-Image">-->
+							<span th:inline="text">[[${' '+
+								session.sessionMaster.employeeModel.emp_ini +' '+
+								session.sessionMaster.employeeModel.emp_name }]]</span> <i
+							class="ti-angle-down"></i></a>
+						<ul class="show-notification profile-notification">
+							<li class="waves-effect waves-light"><a th:inline="text">
+									<i class="ti-user"></i>[[${session.sessionMaster.employeeModel.design_short_desc
+									}]]
+							</a></li>
+							<li class="waves-effect waves-light"><a th:inline="text">
+									<i class="ti-location-pin"></i>[[${session.sessionMaster.employeeModel.loc_name
+									}]]
+							</a></li>
+							<li class="waves-effect waves-light"><a th:href="@{/logout}">
+									<i class="ti-power-off"></i> Logout
+							</a></li>
+						</ul></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+</body>
+</html>

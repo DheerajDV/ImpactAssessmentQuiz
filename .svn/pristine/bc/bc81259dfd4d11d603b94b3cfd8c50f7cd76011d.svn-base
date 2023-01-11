@@ -1,0 +1,416 @@
+package com.iocl.ImpactAssessmentQuiz.model;
+
+import java.time.LocalDateTime;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+@Entity
+@Table(name = "TRN_QUIZ_HEADER")
+public class TrnQuizHeaderModel {
+
+	@Id
+	@Column(name = "QUIZ_ID")
+	private Long quiz_id;
+
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "EVENT_ID", insertable = true, updatable = true, nullable = true)
+	@Fetch(FetchMode.JOIN)
+	private TrnQuizEventModel trnQuizEventModel;
+
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "EMPLOYEE_CODE", insertable = true, updatable = true, nullable = false)
+	@Fetch(FetchMode.JOIN)
+	private EmployeeModel employeeModel;
+
+	@Column(name = "QUIZ_START_TIME")
+	private LocalDateTime quiz_start_time;
+
+	@Column(name = "QUIZ_END_TIME")
+	private LocalDateTime quiz_end_time;
+
+	@Column(name = "QUIZ_DURATION")
+	private Long quiz_duration;
+
+	@Column(name = "QUIZ_TAKEN")
+	private String quiz_taken;
+
+	@Column(name = "NO_OF_ATTEMPTS")
+	private Long no_of_attempts;
+
+	@Column(name = "ATTEMPT_START_TIME")
+	private LocalDateTime attempt_start_time;
+
+	@Column(name = "ATTEMPT_END_TIME")
+	private LocalDateTime attempt_end_time;
+
+	@Column(name = "QUIZ_STATUS")
+	private String quiz_status;
+
+	@Column(name = "ANNOUNCED_BY")
+	private Long announced_by;
+
+	@Column(name = "ANNOUNCED_ON")
+	private LocalDateTime announced_on;
+
+	@Column(name = "TOTAL_QUESTIONS")
+	private Long total_questions;
+
+	@Column(name = "TOTAL_SCORE")
+	private Long total_score;
+
+	@Column(name = "EMPLOYEE_SCORE")
+	private Long employee_score;
+
+	@Column(name = "TOTAL_ATTEMPTED")
+	private Long total_attempted;
+
+	@Column(name = "TOTAL_CORRECT")
+	private Long total_correct;
+
+	@Column(name = "TOTAL_WRONG")
+	private Long total_wrong;
+
+	@Column(name = "TOTAL_SKIPPED")
+	private Long total_skipped;
+
+	@Column(name = "AUTO_SUBMIT_FLG")
+	private String auto_submit_flg;
+
+	@Column(name = "UPDATED_ON")
+	private LocalDateTime updated_on;
+
+	@Column(name = "RESULT_ANNOUNCE_FLG")
+	private String result_announce_flg;
+
+	/**
+	 * @return the quiz_id
+	 */
+	public Long getQuiz_id() {
+		return quiz_id;
+	}
+
+	/**
+	 * @param quiz_id the quiz_id to set
+	 */
+	public void setQuiz_id(Long quiz_id) {
+		this.quiz_id = quiz_id;
+	}
+
+	/**
+	 * @return the employeeModel
+	 */
+	public EmployeeModel getEmployeeModel() {
+		return employeeModel;
+	}
+
+	/**
+	 * @param employeeModel the employeeModel to set
+	 */
+	public void setEmployeeModel(EmployeeModel employeeModel) {
+		this.employeeModel = employeeModel;
+	}
+
+	/**
+	 * @return the quiz_start_time
+	 */
+	public LocalDateTime getQuiz_start_time() {
+		return quiz_start_time;
+	}
+
+	/**
+	 * @param quiz_start_time the quiz_start_time to set
+	 */
+	public void setQuiz_start_time(LocalDateTime quiz_start_time) {
+		this.quiz_start_time = quiz_start_time;
+	}
+
+	/**
+	 * @return the quiz_end_time
+	 */
+	public LocalDateTime getQuiz_end_time() {
+		return quiz_end_time;
+	}
+
+	/**
+	 * @param quiz_end_time the quiz_end_time to set
+	 */
+	public void setQuiz_end_time(LocalDateTime quiz_end_time) {
+		this.quiz_end_time = quiz_end_time;
+	}
+
+	/**
+	 * @return the quiz_duration
+	 */
+	public Long getQuiz_duration() {
+		return quiz_duration;
+	}
+
+	/**
+	 * @param quiz_duration the quiz_duration to set
+	 */
+	public void setQuiz_duration(Long quiz_duration) {
+		this.quiz_duration = quiz_duration;
+	}
+
+	/**
+	 * @return the quiz_taken
+	 */
+	public String getQuiz_taken() {
+		return quiz_taken;
+	}
+
+	/**
+	 * @param quiz_taken the quiz_taken to set
+	 */
+	public void setQuiz_taken(String quiz_taken) {
+		this.quiz_taken = quiz_taken;
+	}
+
+	/**
+	 * @return the no_of_attempts
+	 */
+	public Long getNo_of_attempts() {
+		return no_of_attempts;
+	}
+
+	/**
+	 * @param no_of_attempts the no_of_attempts to set
+	 */
+	public void setNo_of_attempts(Long no_of_attempts) {
+		this.no_of_attempts = no_of_attempts;
+	}
+
+	/**
+	 * @return the quiz_status
+	 */
+	public String getQuiz_status() {
+		return quiz_status;
+	}
+
+	/**
+	 * @param quiz_status the quiz_status to set
+	 */
+	public void setQuiz_status(String quiz_status) {
+		this.quiz_status = quiz_status;
+	}
+
+	/**
+	 * @return the announced_by
+	 */
+	public Long getAnnounced_by() {
+		return announced_by;
+	}
+
+	/**
+	 * @param announced_by the announced_by to set
+	 */
+	public void setAnnounced_by(Long announced_by) {
+		this.announced_by = announced_by;
+	}
+
+	/**
+	 * @return the announced_on
+	 */
+	public LocalDateTime getAnnounced_on() {
+		return announced_on;
+	}
+
+	/**
+	 * @param announced_on the announced_on to set
+	 */
+	public void setAnnounced_on(LocalDateTime announced_on) {
+		this.announced_on = announced_on;
+	}
+
+	/**
+	 * @return the total_questions
+	 */
+	public Long getTotal_questions() {
+		return total_questions;
+	}
+
+	/**
+	 * @param total_questions the total_questions to set
+	 */
+	public void setTotal_questions(Long total_questions) {
+		this.total_questions = total_questions;
+	}
+
+	/**
+	 * @return the total_score
+	 */
+	public Long getTotal_score() {
+		return total_score;
+	}
+
+	/**
+	 * @param total_score the total_score to set
+	 */
+	public void setTotal_score(Long total_score) {
+		this.total_score = total_score;
+	}
+
+	/**
+	 * @return the employee_score
+	 */
+	public Long getEmployee_score() {
+		return employee_score;
+	}
+
+	/**
+	 * @param employee_score the employee_score to set
+	 */
+	public void setEmployee_score(Long employee_score) {
+		this.employee_score = employee_score;
+	}
+
+	/**
+	 * @return the total_correct
+	 */
+	public Long getTotal_correct() {
+		return total_correct;
+	}
+
+	/**
+	 * @param total_correct the total_correct to set
+	 */
+	public void setTotal_correct(Long total_correct) {
+		this.total_correct = total_correct;
+	}
+
+	/**
+	 * @return the total_wrong
+	 */
+	public Long getTotal_wrong() {
+		return total_wrong;
+	}
+
+	/**
+	 * @param total_wrong the total_wrong to set
+	 */
+	public void setTotal_wrong(Long total_wrong) {
+		this.total_wrong = total_wrong;
+	}
+
+	/**
+	 * @return the total_skipped
+	 */
+	public Long getTotal_skipped() {
+		return total_skipped;
+	}
+
+	/**
+	 * @param total_skipped the total_skipped to set
+	 */
+	public void setTotal_skipped(Long total_skipped) {
+		this.total_skipped = total_skipped;
+	}
+
+	/**
+	 * @return the auto_submit_flg
+	 */
+	public String getAuto_submit_flg() {
+		return auto_submit_flg;
+	}
+
+	/**
+	 * @param auto_submit_flg the auto_submit_flg to set
+	 */
+	public void setAuto_submit_flg(String auto_submit_flg) {
+		this.auto_submit_flg = auto_submit_flg;
+	}
+
+	/**
+	 * @return the attempt_start_time
+	 */
+	public LocalDateTime getAttempt_start_time() {
+		return attempt_start_time;
+	}
+
+	/**
+	 * @param attempt_start_time the attempt_start_time to set
+	 */
+	public void setAttempt_start_time(LocalDateTime attempt_start_time) {
+		this.attempt_start_time = attempt_start_time;
+	}
+
+	/**
+	 * @return the attempt_end_time
+	 */
+	public LocalDateTime getAttempt_end_time() {
+		return attempt_end_time;
+	}
+
+	/**
+	 * @param attempt_end_time the attempt_end_time to set
+	 */
+	public void setAttempt_end_time(LocalDateTime attempt_end_time) {
+		this.attempt_end_time = attempt_end_time;
+	}
+
+	/**
+	 * @return the total_attempted
+	 */
+	public Long getTotal_attempted() {
+		return total_attempted;
+	}
+
+	/**
+	 * @param total_attempted the total_attempted to set
+	 */
+	public void setTotal_attempted(Long total_attempted) {
+		this.total_attempted = total_attempted;
+	}
+
+	/**
+	 * @return the updated_on
+	 */
+	public LocalDateTime getUpdated_on() {
+		return updated_on;
+	}
+
+	/**
+	 * @param updated_on the updated_on to set
+	 */
+	public void setUpdated_on(LocalDateTime updated_on) {
+		this.updated_on = updated_on;
+	}
+
+	/**
+	 * @return the result_announce_flg
+	 */
+	public String getResult_announce_flg() {
+		return result_announce_flg;
+	}
+
+	/**
+	 * @param result_announce_flg the result_announce_flg to set
+	 */
+	public void setResult_announce_flg(String result_announce_flg) {
+		this.result_announce_flg = result_announce_flg;
+	}
+
+	/**
+	 * @return the trnQuizEventModel
+	 */
+	public TrnQuizEventModel getTrnQuizEventModel() {
+		return trnQuizEventModel;
+	}
+
+	/**
+	 * @param trnQuizEventModel the trnQuizEventModel to set
+	 */
+	public void setTrnQuizEventModel(TrnQuizEventModel trnQuizEventModel) {
+		this.trnQuizEventModel = trnQuizEventModel;
+	}
+
+}

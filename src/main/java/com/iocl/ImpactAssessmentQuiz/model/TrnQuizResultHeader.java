@@ -1,0 +1,329 @@
+package com.iocl.ImpactAssessmentQuiz.model;
+
+import java.time.LocalDateTime;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+@Entity
+@Table(name = "QUIZ_RESULT_HEADER")
+public class TrnQuizResultHeader {
+
+	@Id
+	@Column(name = "QUIZ_ID")
+	private Long quiz_id;
+
+	@Column(name = "EVENT_ID")
+	private Long event_id;
+
+	@Column(name = "EVENT_NAME")
+	private String event_name;
+
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "EMPLOYEE_CODE", insertable = true, updatable = true, nullable = false)
+	@Fetch(FetchMode.JOIN)
+	private EmployeeModel employeeModel;
+
+	@Column(name = "QUIZ_START_TIME")
+	private String quiz_start_time;
+
+	@Column(name = "QUIZ_END_TIME")
+	private String quiz_end_time;
+
+	@Column(name = "QUIZ_DURATION")
+	private Long quiz_duration;
+
+	@Column(name = "NO_OF_ATTEMPTS")
+	private Long no_of_attempts;
+
+	@Column(name = "ATTEMPT_START_TIME")
+	private String attempt_start_time;
+
+	@Column(name = "ATTEMPT_END_TIME")
+	private LocalDateTime attempt_end_time;
+
+	@Column(name = "TIME_TAKEN")
+	private String time_taken;
+
+	@Column(name = "TOTAL_QUESTIONS")
+	private Long total_questions;
+
+	@Column(name = "TOTAL_SCORE")
+	private Long total_score;
+
+	@Column(name = "EMPLOYEE_SCORE")
+	private Long employee_score;
+
+	@Column(name = "TOTAL_ATTEMPTED")
+	private Long total_attempted;
+
+	@Column(name = "TOTAL_CORRECT")
+	private Long total_correct;
+
+	@Column(name = "TOTAL_WRONG")
+	private Long total_wrong;
+
+	@Column(name = "TOTAL_SKIPPED")
+	private Long total_skipped;
+
+	/**
+	 * @return the quiz_id
+	 */
+	public Long getQuiz_id() {
+		return quiz_id;
+	}
+
+	/**
+	 * @param quiz_id the quiz_id to set
+	 */
+	public void setQuiz_id(Long quiz_id) {
+		this.quiz_id = quiz_id;
+	}
+
+	/**
+	 * @return the employeeModel
+	 */
+	public EmployeeModel getEmployeeModel() {
+		return employeeModel;
+	}
+
+	/**
+	 * @param employeeModel the employeeModel to set
+	 */
+	public void setEmployeeModel(EmployeeModel employeeModel) {
+		this.employeeModel = employeeModel;
+	}
+
+	/**
+	 * @return the quiz_start_time
+	 */
+	public String getQuiz_start_time() {
+		return quiz_start_time;
+	}
+
+	/**
+	 * @param quiz_start_time the quiz_start_time to set
+	 */
+	public void setQuiz_start_time(String quiz_start_time) {
+		this.quiz_start_time = quiz_start_time;
+	}
+
+	/**
+	 * @return the quiz_end_time
+	 */
+	public String getQuiz_end_time() {
+		return quiz_end_time;
+	}
+
+	/**
+	 * @param quiz_end_time the quiz_end_time to set
+	 */
+	public void setQuiz_end_time(String quiz_end_time) {
+		this.quiz_end_time = quiz_end_time;
+	}
+
+	/**
+	 * @return the quiz_duration
+	 */
+	public Long getQuiz_duration() {
+		return quiz_duration;
+	}
+
+	/**
+	 * @param quiz_duration the quiz_duration to set
+	 */
+	public void setQuiz_duration(Long quiz_duration) {
+		this.quiz_duration = quiz_duration;
+	}
+
+	/**
+	 * @return the no_of_attempts
+	 */
+	public Long getNo_of_attempts() {
+		return no_of_attempts;
+	}
+
+	/**
+	 * @param no_of_attempts the no_of_attempts to set
+	 */
+	public void setNo_of_attempts(Long no_of_attempts) {
+		this.no_of_attempts = no_of_attempts;
+	}
+
+	/**
+	 * @return the attempt_start_time
+	 */
+	public String getAttempt_start_time() {
+		return attempt_start_time;
+	}
+
+	/**
+	 * @param attempt_start_time the attempt_start_time to set
+	 */
+	public void setAttempt_start_time(String attempt_start_time) {
+		this.attempt_start_time = attempt_start_time;
+	}
+
+	/**
+	 * @return the attempt_end_time
+	 */
+	public LocalDateTime getAttempt_end_time() {
+		return attempt_end_time;
+	}
+
+	/**
+	 * @param attempt_end_time the attempt_end_time to set
+	 */
+	public void setAttempt_end_time(LocalDateTime attempt_end_time) {
+		this.attempt_end_time = attempt_end_time;
+	}
+
+	/**
+	 * @return the total_questions
+	 */
+	public Long getTotal_questions() {
+		return total_questions;
+	}
+
+	/**
+	 * @param total_questions the total_questions to set
+	 */
+	public void setTotal_questions(Long total_questions) {
+		this.total_questions = total_questions;
+	}
+
+	/**
+	 * @return the total_score
+	 */
+	public Long getTotal_score() {
+		return total_score;
+	}
+
+	/**
+	 * @param total_score the total_score to set
+	 */
+	public void setTotal_score(Long total_score) {
+		this.total_score = total_score;
+	}
+
+	/**
+	 * @return the employee_score
+	 */
+	public Long getEmployee_score() {
+		return employee_score;
+	}
+
+	/**
+	 * @param employee_score the employee_score to set
+	 */
+	public void setEmployee_score(Long employee_score) {
+		this.employee_score = employee_score;
+	}
+
+	/**
+	 * @return the total_attempted
+	 */
+	public Long getTotal_attempted() {
+		return total_attempted;
+	}
+
+	/**
+	 * @param total_attempted the total_attempted to set
+	 */
+	public void setTotal_attempted(Long total_attempted) {
+		this.total_attempted = total_attempted;
+	}
+
+	/**
+	 * @return the total_correct
+	 */
+	public Long getTotal_correct() {
+		return total_correct;
+	}
+
+	/**
+	 * @param total_correct the total_correct to set
+	 */
+	public void setTotal_correct(Long total_correct) {
+		this.total_correct = total_correct;
+	}
+
+	/**
+	 * @return the total_wrong
+	 */
+	public Long getTotal_wrong() {
+		return total_wrong;
+	}
+
+	/**
+	 * @param total_wrong the total_wrong to set
+	 */
+	public void setTotal_wrong(Long total_wrong) {
+		this.total_wrong = total_wrong;
+	}
+
+	/**
+	 * @return the total_skipped
+	 */
+	public Long getTotal_skipped() {
+		return total_skipped;
+	}
+
+	/**
+	 * @param total_skipped the total_skipped to set
+	 */
+	public void setTotal_skipped(Long total_skipped) {
+		this.total_skipped = total_skipped;
+	}
+
+	/**
+	 * @return the time_taken
+	 */
+	public String getTime_taken() {
+		return time_taken;
+	}
+
+	/**
+	 * @param time_taken the time_taken to set
+	 */
+	public void setTime_taken(String time_taken) {
+		this.time_taken = time_taken;
+	}
+
+	/**
+	 * @return the event_id
+	 */
+	public Long getEvent_id() {
+		return event_id;
+	}
+
+	/**
+	 * @param event_id the event_id to set
+	 */
+	public void setEvent_id(Long event_id) {
+		this.event_id = event_id;
+	}
+
+	/**
+	 * @return the event_name
+	 */
+	public String getEvent_name() {
+		return event_name;
+	}
+
+	/**
+	 * @param event_name the event_name to set
+	 */
+	public void setEvent_name(String event_name) {
+		this.event_name = event_name;
+	}
+
+}

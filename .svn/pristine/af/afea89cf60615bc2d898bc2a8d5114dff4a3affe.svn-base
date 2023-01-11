@@ -1,0 +1,25 @@
+package com.iocl.ImpactAssessmentQuiz.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.iocl.ImpactAssessmentQuiz.model.EmployeeModel;
+import com.iocl.ImpactAssessmentQuiz.repository.EmployeeRepository;
+
+@Service
+public class EmployeeService {
+	@Autowired
+	EmployeeRepository employeeRepository;
+
+	public EmployeeModel findEmpDetails(Long empid) {
+
+		return employeeRepository.findById(empid).orElse(null);
+
+	}
+
+	public Object[][] getEmpDet(Long emp_cd) {
+		return (Object[][]) employeeRepository.getEmpDet(emp_cd);
+	}
+
+
+}

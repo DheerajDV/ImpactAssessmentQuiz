@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Swadhyaya Impact Assessment Quiz</title>
+<link rel="stylesheet" type="text/css"
+	th:href="@{assets/css/bootstrap/css/bootstrap.min.css}" />
+<script type="text/javascript"
+	th:src="@{assets/js/jquery/jquery.min.js}"></script>
+<script type="text/javascript"
+	th:src="@{assets/js/bootstrap/js/bootstrap.min.js} "></script>
+</head>
+<style type="text/css">
+.resultDiv {
+	width: 500px;
+	height: 300px;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+}
+
+#tableID td, #tableID  th {
+	border: 1px solid #f2f2f2;
+	background-color: #f2f2f2;
+	padding: 8px;
+}
+
+#tableID {
+	font-family: Helvetica;
+	border-collapse: collapse;
+	width: 95%;
+}
+</style>
+<style th:inline="text">
+body {
+	background-image: url([[@{/image/quiz-slide04.jpg}]]);
+}
+</style>
+
+
+<body
+	style="height: 1000px; overflow: hidden; background-position: center; background-repeat: no-repeat; background-size: cover;">
+	<div class="container">
+		<div class="resultDiv">
+			<h3 style="color: white">
+				<b>Quiz Attempt Statistics </b>
+			</h3>
+			<table id="tableID" border="1">
+				<tr>
+					<td>Total No. of Questions</td>
+					<td th:inline="text">[[${trnQuizHeaderModel.total_questions==null?'0':trnQuizHeaderModel.total_questions}]]</td>
+				</tr>
+				<tr>
+					<td>Total No. of Ques. Attempted</td>
+					<td th:inline="text">[[${trnQuizHeaderModel.total_attempted==null?'0':trnQuizHeaderModel.total_attempted}]]</td>
+				</tr>
+				<tr>
+					<td>Total No. of Ques. UnAttempted</td>
+					<td th:inline="text">[[${trnQuizHeaderModel.total_skipped==null?'0':trnQuizHeaderModel.total_skipped}]]</td>
+				</tr>
+				<tr th:if="${trnQuizHeaderModel.result_announce_flg=='Y'}">
+					<td>Total No. of Correct Ans.</td>
+					<td th:inline="text">[[${trnQuizHeaderModel.total_correct==null?'0':trnQuizHeaderModel.total_correct}]]</td>
+				</tr>
+				<tr th:if="${trnQuizHeaderModel.result_announce_flg=='Y'}">
+					<td>Total No. of InCorrect Ans.</td>
+					<td th:inline="text">[[${trnQuizHeaderModel.total_wrong==null?'0':trnQuizHeaderModel.total_wrong}]]</td>
+				</tr>
+				<tr th:if="${trnQuizHeaderModel.result_announce_flg=='Y'}">
+					<td>Total Marks</td>
+					<td th:inline="text">[[${trnQuizHeaderModel.employee_score==null?'0':trnQuizHeaderModel.employee_score}]]</td>
+				</tr>
+
+			</table>
+			<div style="text-align: center;">
+				<button style="font-size: inherit; margin-top: 15px;"
+					onclick="closeWin()">Close</button>
+			</div>
+		</div>
+	</div>
+	<script>
+		function closeWin() {
+			window.close();
+		}
+	</script>
+</body>
+
+</html>

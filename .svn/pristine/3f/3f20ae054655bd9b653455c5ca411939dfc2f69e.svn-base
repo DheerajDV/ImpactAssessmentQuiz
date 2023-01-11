@@ -1,0 +1,70 @@
+package com.iocl.ImpactAssessmentQuiz.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.iocl.ImpactAssessmentQuiz.model.TrnQuizHeaderModel;
+import com.iocl.ImpactAssessmentQuiz.repository.TrnQuizHeaderRepository;
+
+@Service
+public class TrnQuizHeaderService {
+
+	@Autowired
+	TrnQuizHeaderRepository trnQuizHeaderRepository;
+
+	public List<TrnQuizHeaderModel> findActiveQuiz(Long emp_code) {
+		return trnQuizHeaderRepository.findActiveQuiz(emp_code);
+	}
+
+	public TrnQuizHeaderModel findQuizDetails(Long quiz_id) {
+		return trnQuizHeaderRepository.findById(quiz_id).orElse(null);
+	}
+
+	public Object[][] findQuizDet(Long quiz_id) {
+		return trnQuizHeaderRepository.findQuizDet(quiz_id);
+	}
+
+	public void saveorupdate(TrnQuizHeaderModel trnQuizHeaderModel) {
+		trnQuizHeaderRepository.save(trnQuizHeaderModel);
+
+	}
+
+	public void callQuestionSelectionProc(Long quiz_id) {
+		trnQuizHeaderRepository.callQuestionSelectionProc(quiz_id);
+
+	}
+
+	public void callGenerateResultProc() {
+		trnQuizHeaderRepository.callGenerateResultProc();
+
+	}
+
+	public List<TrnQuizHeaderModel> findQuizListForReset(Long emp_code) {
+		return trnQuizHeaderRepository.findQuizListForReset(emp_code);
+
+	}
+
+	public List<TrnQuizHeaderModel> findDivQuizListForReset(Long emp_code, String div_code) {
+		return trnQuizHeaderRepository.findDivQuizListForReset(emp_code, div_code);
+
+	}
+
+	public void callQuizResetProc(Long input_old_quiz_id, Long input_new_quiz_id, Long input_emp_code,
+			String input_old_quiz_retain_flg) {
+		trnQuizHeaderRepository.callQuizResetProc(input_old_quiz_id, input_new_quiz_id, input_emp_code,
+				input_old_quiz_retain_flg);
+
+	}
+
+	public Long getQuizID() {
+		return trnQuizHeaderRepository.getQuizID();
+	}
+
+	public void saveorupdateAll(List<TrnQuizHeaderModel> trnQuizHeaderModel) {
+		trnQuizHeaderRepository.saveAll(trnQuizHeaderModel);
+
+	}
+
+}

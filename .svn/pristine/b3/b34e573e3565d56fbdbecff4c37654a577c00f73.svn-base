@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<title>Swadhyaya Impact Assessment Quiz</title>
+<meta charset="utf-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="keywords"
+	content="bootstrap, bootstrap admin template, admin theme, admin dashboard, dashboard template, admin template, responsive" />
+<meta name="author" content="Codedthemes" />
+<!-- Favicon -->
+<link rel="icon" th:href="@{/favicon.ico}"></link>
+<!-- Required Fremwork -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{assets/css/bootstrap/css/bootstrap.min.css}" />
+
+<!-- themify icon -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{assets/icon/themify-icons/themify-icons.css}" />
+<!-- font-awesome-n -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{assets/css/font-awesome-n.min.css}" />
+<link rel="stylesheet" type="text/css"
+	th:href="@{assets/css/font-awesome.min.css}" />
+<!-- scrollbar.css -->
+<link rel="stylesheet" type="text/css"
+	th:href="@{assets/css/jquery.mCustomScrollbar.css}" />
+<!-- Style.css -->
+<link rel="stylesheet" type="text/css" th:href="@{assets/css/style.css}" />
+<!-- Select2.css -->
+<link th:href="@{/css/select2.min.css}" rel="stylesheet" />
+<!-- template.css for form design -->
+<link th:href="@{/css/template.css}" rel=" stylesheet" />
+<!-- template.css for form design -->
+<link th:href="@{/css/alertStyle.css}" rel=" stylesheet" />
+<!-- Datatables  CSS -->
+<link rel="stylesheet" th:href="@{/css/jquery.dataTables.min.css}" />
+<link rel="stylesheet" th:href="@{/css/buttons.dataTables.min.css}" />
+
+<style>
+#footerid {
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	text-align: center;
+	background-color: white;
+	color: black;
+}
+</style>
+</head>
+<body>
+	<div>
+		<div th:replace="../includes/preLoader :: preLoader"></div>
+		<div id="pcoded" class="pcoded">
+			<div class="pcoded-overlay-box"></div>
+			<div class="pcoded-container navbar-wrapper">
+				<nav th:replace="../includes/emp_details :: emp_details"></nav>
+				<div class="pcoded-main-container">
+					<div class="pcoded-wrapper">
+						<nav th:replace="../includes/menuBar :: menuBar"></nav>
+						<div class="pcoded-content">
+							<div class="pcoded-inner-content">
+								<!-- Main-body start -->
+								<div class="main-body">
+									<div class="page-wrapper">
+										<!-- Page-body start -->
+										<div class="page-body">
+											<div class="row">
+												<div class="col-xl-1 col-md-1"></div>
+												<div class="col-xl-10 col-md-10">
+													<div id="sucessMsg" th:if="${message!=null}"
+														class="alert
+														success" th:inline="text">
+														<span class="closebtn"
+															onclick="this.parentElement.style.display='none';">&times;</span>
+														<strong></strong> [[${message}]]!
+													</div>
+													<div id="errMsg" th:if="${errorMsg!=null}" class="alert"
+														th:inline="text">
+														<span class="closebtn"
+															onclick="this.parentElement.style.display='none';">&times;</span>
+														<strong></strong> [[${errorMsg}]]!
+													</div>
+													<div class="card">
+														<form id="submit_form" name="submit_form"
+															th:action="@{/ResetQuiz}" method="post">
+															<div class="card-header">
+																<h4 style="text-align: center;">Reset Quiz</h4>
+															</div>
+															<div class="card-body">
+																<div class="form-row">
+																	<div class="form-group col-md-2">Enter Employee
+																		Code</div>
+																	<div class="form-group col-md-4">
+																		<input id="employee_code" class="form-Input"
+																			type="text" onchange="fetch_quiz_list();" />
+																	</div>
+																	<div class="form-group col-md-2">Select Quiz ID</div>
+																	<div class="form-group col-md-4">
+																		<select id="quiz_dropdown" name="quiz_id"
+																			onchange="fetch_quiz_details();"
+																			class="js-example-basic-single form-select"
+																			required="required">
+																			<option selected="selected" disabled="disabled"
+																				value="">----Select----</option>
+																		</select>
+																	</div>
+																	<div class="form-group col-md-2">Quiz to be
+																		retained?</div>
+																	<div class="form-group col-md-4">
+																		<select id="quiz_dropdown" name="quiz_retain_flg"
+																			class="form-select" required="required">
+																			<option selected="selected" value="Y">Yes</option>
+																			<option value="N">No</option>
+																		</select>
+																	</div>
+																	<div class="form-group col-md-12">
+																		<table
+																			class="table table-bordered table-striped table-sm"
+																			id="dataTable" style="width: 100%">
+																			<thead>
+																				<tr>
+																					<th>Quiz ID</th>
+																					<th>Employee Code</th>
+																					<th>Employee Name</th>
+																					<th>Quiz Valid From</th>
+																					<th>Quiz Valid To</th>
+																					<th>Total Questions Attempted</th>
+
+																				</tr>
+																			</thead>
+																			<tbody>
+																			</tbody>
+																		</table>
+																	</div>
+																	<div class="form-group col-md-12 text-center">
+																		<input type="hidden" name="mentor_id"
+																			th:value="${session.sessionMaster.employeeModel.emp_code}" />
+																		<button type="submit" class="btn btn-warning"
+																			style="font-size: inherit;">Reset Quiz</button>
+																	</div>
+																</div>
+															</div>
+														</form>
+													</div>
+												</div>
+												<div class="col-xl-1 col-md-1"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="footer-div">
+			<div th:replace="../includes/footer :: footer"></div>
+		</div>
+	</div>
+	<script type="text/javascript"
+		th:src="@{assets/js/jquery/jquery.min.js}"></script>
+	<script type="text/javascript"
+		th:src="@{assets/js/jquery-ui/jquery-ui.min.js} "></script>
+	<script type="text/javascript"
+		th:src="@{assets/js/popper.js/popper.min.js}"></script>
+	<script type="text/javascript"
+		th:src="@{assets/js/bootstrap/js/bootstrap.min.js} "></script>
+	<script th:src="@{/js/select2.min.js}"></script>
+	<!-- jquery slimscroll js -->
+	<script type="text/javascript"
+		th:src="@{assets/js/jquery-slimscroll/jquery.slimscroll.js}"></script>
+
+	<!-- slimscroll js -->
+	<script th:src="@{assets/js/jquery.mCustomScrollbar.concat.min.js} "></script>
+
+	<!-- menu js -->
+	<script th:src="@{assets/js/pcoded.min.js}"></script>
+	<script th:src="@{assets/js/vertical/vertical-layout.min.js} "></script>
+	<script type="text/javascript" th:src="@{assets/js/script.js} "></script>
+
+	<!-- Datatable js -->
+	<script th:src="@{/js/jquery.dataTables.min.js}" type="text/javascript"></script>
+	<script th:src="@{/js/dataTables.buttons.min.js}"
+		type="text/javascript"></script>
+	<script th:src="@{/js/buttons.flash.min.js}" type="text/javascript"></script>
+	<script th:src="@{/js/jszip.min.js}" type="text/javascript"></script>
+	<script th:src="@{/js/pdfmake.min.js}" type="text/javascript"></script>
+	<script th:src="@{/js/vfs_fonts.js}" type="text/javascript"></script>
+	<script th:src="@{/js/buttons.html5.min.js}" type="text/javascript"></script>
+	<script th:src="@{/js/buttons.print.min.js}" type="text/javascript"></script>
+	<script th:src="@{/js/jspdf.js}"></script>
+
+	<script th:inline="javascript">
+		$(document).ready(function() {
+			$('.js-example-basic-single').select2();
+
+			setTimeout(function() {
+				$('#sucessMsg').fadeOut('fast');
+			}, 2000);
+
+			setTimeout(function() {
+				$('#errMsg').fadeOut('fast');
+			}, 2000);
+
+		});
+
+		function fetch_quiz_list() {
+
+			var employee_code_input = $('#employee_code').val();
+			var regularExpression = /(cook|<|>|;|:)/i;
+
+			if (regularExpression.test(employee_code_input.toLowerCase())) {
+				alert("Please make sure your input doesn't contain characters/words like cook < > ; :");
+				return false;
+			}
+
+			if (($('#employee_code').val()).trim() == '') {
+				alert("Please enter employee code");
+				return false;
+			}
+
+			/*<![CDATA[*/
+
+			$
+					.ajax({
+						url : "fecthQuizList",
+						method : "post",
+						async : false,
+						data : {
+							// 							search_criteria : $('#criteria_dropdown').val(),
+							employee_code : $('#employee_code').val()
+						},
+						success : function(data) {
+							if (data != null && data != '') {
+								var html = '<option disabled="disabled"  selected="selected">------------Select------------</option>';
+								data
+										.forEach(function(dataItem) {
+											html += '<option value="' + dataItem.quiz_id + '">'
+													+ dataItem.quiz_id
+													+ '</option>';
+										});
+								$('#quiz_dropdown').html(html);
+								// 								fetch_employee_details();
+								alert("Quiz list populated. Please select quiz id from the dropdown");
+							} else {
+								alert("Quiz not found");
+							}
+
+						},
+						error : function(e) {
+							alert("Error occured");
+							return;
+						}
+
+					});
+			/*]]>*/
+
+		}
+
+		function fetch_quiz_details() {
+
+			$("#dataTable").find("tr:gt(0)").remove();
+			/*<![CDATA[*/
+			$.ajax({
+				url : "fecthQuizDetails",
+				method : "post",
+				async : false,
+				data : {
+					quiz_id : $('#quiz_dropdown').val()
+				},
+				success : function(data) {
+					if (data != null && data != '') {
+						data.forEach(function(dataItem) {
+							var row = '<tr><td>' + dataItem[0] + '</td><td>'
+									+ dataItem[1] + '</td><td>' + dataItem[2]
+									+ '</td><td>' + dataItem[3] + '</td><td>'
+									+ dataItem[4] + '</td><td>' + dataItem[5]
+									+ '</td>' + '</tr>';
+							$("#dataTable tbody").append(row);
+						});
+
+					}
+
+				},
+				error : function(e) {
+					alert("Error occured");
+					return;
+				}
+
+			});
+			/*]]>*/
+
+		}
+	</script>
+</body>
+</html>

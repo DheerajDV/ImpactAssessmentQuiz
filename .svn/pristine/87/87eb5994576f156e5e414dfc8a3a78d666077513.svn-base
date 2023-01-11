@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Swadhyaya Impact Assessment Quiz</title>
+
+<link rel="stylesheet" th:href="@{css/bootstrap.min_1.css}">
+<link rel="stylesheet" th:href="@{css/custom-theme.css}">
+<link rel="stylesheet" th:href="@{css/quiz.css}">
+<script type="text/javascript"
+	th:src="@{assets/js/jquery/jquery.min.js}"></script>
+<script type="text/javascript"
+	th:src="@{assets/js/bootstrap/js/bootstrap.min.js} "></script>
+
+
+<script th:src="@{js/jquery.countdown.js}"></script>
+</head>
+<style type="text/css">
+.label {
+	line-height: 2;
+}
+
+/* The sidebar menu */
+.sidenav {
+	height: 100%; /* Full-height: remove this if you want "auto" height */
+	/*                width: 200px;  Set the width of the sidebar 
+                                //  position: fixed;  Fixed Sidebar (stay in place on scroll) */
+	z-index: 1; /* Stay on top */
+	top: 0; /* Stay at the top */
+	left: 0;
+	background-color: #f9f9f9;
+	overflow-x: hidden; /* Disable horizontal scroll */
+	padding-top: 20px;
+}
+
+/* The navigation menu links */
+.sidenav a {
+	padding: 6px 8px 6px 16px;
+	text-decoration: none;
+	font-size: 25px;
+	color: #818181;
+	display: block;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover {
+	color: #f1f1f1;
+}
+
+/* Style page content */
+.main {
+	margin-left: 160px; /* Same as the width of the sidebar */
+	padding: 0px 10px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+	.sidenav {
+		padding-top: 15px;
+	}
+	.sidenav a {
+		font-size: 18px;
+	}
+}
+
+.table-borderless td, .table-borderless th {
+	border: 0;
+}
+
+.borderless td, .borderless th {
+	border: none;
+}
+
+#submit1 {
+	color: white;
+	border: 1px solid rgba(243, 112, 34, 1);
+	background-color: rgba(243, 112, 34, 1);
+	font-size: 14px;
+	padding: 10px;
+	font-weight: 600;
+	border-radius: 0px;
+}
+</style>
+
+
+<body onunload="closewindow()">
+	<div class="container-fluid">
+		<header>
+			<h2>
+				<a href="index.jsp"><img th:src="@{/image/swadhyaya_logo.jpg}"
+					alt="" style="border-radius: 4px 4px 4px 4px; width: 122px;"></a>
+			</h2>
+			<nav th:replace="../includes/nav_quiz :: nav_quiz"></nav>
+			<!-- 			<legend>Quiz </legend> -->
+
+			<section>
+
+				<div style="width: 60%; float: left"></div>
+				<div style="left-margin: 60%">
+					<div id="content" align="right">
+						<div class="alt-2" style="font-size: 15pt" th:inline="text">0:[[${quizBean.quiz_time}]]:00</div>
+					</div>
+
+				</div>
+			</section>
+		</header>
+		<div id="outerquestionDiv">
+			<div id="questionDiv">
+				<div th:replace="quiz::quiz"></div>
+			</div>
+		</div>
+	</div>
+	<form name="submitForm" method="post" th:action="@{/FinishQuiz}">
+		<input type="hidden" id="form_action" name="action" /><input
+			type="hidden" id="form_quiz_id" name="quiz_id" /> <input
+			type="hidden" id="form_curr_question_id" name="curr_question_id" />
+		<input type="hidden" id="form_curr_question_seq"
+			name="curr_question_seq" /> <input type="hidden"
+			id="form_curr_option_seq_selected" name="curr_option_seq_selected" />
+		<input type="hidden" id="form_move_to_ques_seq"
+			name="move_to_ques_seq" />
+	</form>
+	<script th:inline="text">
+		window.jQuery(function($) {
+			// Timer
+			"use strict";
+
+           $('time').countDown({
+                    with_separators: false
+           	});
+                
+			$('.alt-2').countDown({});
+
+		});
+		
+		 function disableF5(e) {
+             if ((e.which || e.keyCode) == 116)
+                 e.preventDefault();
+         }
+		
+		 function disableBack() {
+             window.history.forward()
+         }
+
+         window.onload = disableBack();
+         window.onpageshow = function (evt) {
+             if (evt.persisted)
+                 disableBack()
+         }       
+     
+         $(document).on("keydown", disableF5);
+
+		$(document)
+				.ready(
+						function() {	
+							
+// 							var quiz_taken="N";
+// 							var quiz_expired="N";
+// 							var quiz_time_left="N";
+	
+						});
+		
+		function movetoques(move_to_que_seq,quiz_id,curr_que_id,curr_que_seq){
+			
+			var quiz_taken="N";
+			var quiz_expired="N";
+			var quiz_time_left="N";
+
+			/*<![CDATA[*/					
+			$.ajax({
+				url : "checkQuizExpiryStatus",
+				method : "post",
+				async : false,
+				data : {
+					quiz_id : [[${quizBean.quiz_id}]]
+				},
+				success : function(data) {
+					
+					if([[${session.sessionMaster.employeeModel==null}]]){
+						window.location.href=/*[[@{/SessionTimeOut}]]*/ '/SIAQ/SessionTimeOut'
+						
+					}
+					if (data!=null && data=='Y') {
+						
+						quiz_expired="Y";
+					}
+
+				},
+				error : function(e) {
+					alert("Error occured");
+					return;
+				}
+
+			});
+			
+			$.ajax({
+				url : "checkRemainingTimeStatus",
+				method : "post",
+				async : false,
+				data : {
+					quiz_id : [[${quizBean.quiz_id}]]
+				},
+				success : function(data) {
+					
+					if([[${session.sessionMaster.employeeModel==null}]]){
+						window.location.href=/*[[@{/SessionTimeOut}]]*/ '/SIAQ/SessionTimeOut'
+						
+					}
+					if (data!=null && data=='Y') {
+						
+						quiz_time_left="Y";
+					}
+
+				},
+				error : function(e) {
+					alert("Error occured");
+					return;
+				}
+
+			});
+			
+		
+			/*]]>*/
+
+			if(quiz_expired=='Y'){
+// 				alert("Quiz no longer active");
+				$('#form_quiz_id').val(quiz_id);
+				$('#form_action').val("TimeUp");
+				$('#form_curr_question_id').val(curr_que_id);
+				$('#form_curr_question_seq').val(curr_que_seq);
+				$('#form_curr_option_seq_selected').val($("input[name='answer']:checked").val());
+				$('#form_move_to_ques_seq').val(move_to_que_seq);
+				
+				document.submitForm.submit();
+				
+			}
+			if(quiz_time_left=='N'){
+// 				alert("Quiz time completed.");
+
+				$('#form_quiz_id').val(quiz_id);
+				$('#form_action').val("TimeUp");
+				$('#form_curr_question_id').val(curr_que_id);
+				$('#form_curr_question_seq').val(curr_que_seq);
+				$('#form_curr_option_seq_selected').val($("input[name='answer']:checked").val());
+				$('#form_move_to_ques_seq').val(move_to_que_seq);
+				
+				document.submitForm.submit();
+				
+			}
+			
+			
+
+			$.ajax({
+				url : "QuizAction",
+				method : "post",
+				async : false,
+				data : {
+					action : "Move",
+					quiz_id : quiz_id,
+					curr_question_id : curr_que_id,
+					curr_question_seq :curr_que_seq,
+					curr_option_seq_selected :$("input[name='answer']:checked").val(),
+					move_to_ques_seq : move_to_que_seq,
+				},
+				success : function(data) {
+					
+					if([[${session.sessionMaster.employeeModel==null}]]){
+						window.location.href=/*[[@{/SessionTimeOut}]]*/ '/SIAQ/SessionTimeOut'
+						
+					}
+// 					document.getElementById("outerquestionDiv").style.display = "block";
+					
+					$("#questionDiv").html(data);
+
+
+				},
+				error : function(e) {
+					alert("Error occured");
+					return;
+				}
+
+			});
+			
+		}
+		function customSubmit(action,move_to_que_seq,quiz_id,curr_que_id,curr_que_seq){
+			
+			
+			var quiz_taken="N";
+			var quiz_expired="N";
+			var quiz_time_left="N";
+
+			/*<![CDATA[*/
+			
+			
+			$.ajax({
+				url : "checkQuizExpiryStatus",
+				method : "post",
+				async : false,
+				data : {
+					quiz_id : [[${quizBean.quiz_id}]]
+				},
+				success : function(data) {
+					
+					if([[${session.sessionMaster.employeeModel==null}]]){
+						window.location.href=/*[[@{/SessionTimeOut}]]*/ '/SIAQ/SessionTimeOut'
+						
+					}
+					if (data!=null && data=='Y') {
+						
+						quiz_expired="Y";
+					}
+
+				},
+				error : function(e) {
+					alert("Error occured");
+					return;
+				}
+
+			});
+			
+			$.ajax({
+				url : "checkRemainingTimeStatus",
+				method : "post",
+				async : false,
+				data : {
+					quiz_id : [[${quizBean.quiz_id}]]
+				},
+				success : function(data) {
+					
+					if([[${session.sessionMaster.employeeModel==null}]]){
+						window.location.href=/*[[@{/SessionTimeOut}]]*/ '/SIAQ/SessionTimeOut'
+						
+					}
+					if (data!=null && data=='Y') {
+						
+						quiz_time_left="Y";
+					}
+
+				},
+				error : function(e) {
+					alert("Error occured");
+					return;
+				}
+
+			});
+			
+		
+			/*]]>*/
+
+			if(quiz_expired=='Y'){
+// 				alert("Quiz no longer active");
+				$('#form_quiz_id').val(quiz_id);
+				$('#form_action').val("TimeUp");
+				$('#form_curr_question_id').val(curr_que_id);
+				$('#form_curr_question_seq').val(curr_que_seq);
+				$('#form_curr_option_seq_selected').val($("input[name='answer']:checked").val());
+				$('#form_move_to_ques_seq').val(move_to_que_seq);
+				
+				document.submitForm.submit();
+				
+			}
+			if(quiz_time_left=='N'){
+// 				alert("Quiz time completed.");
+
+				$('#form_quiz_id').val(quiz_id);
+				$('#form_action').val("TimeUp");
+				$('#form_curr_question_id').val(curr_que_id);
+				$('#form_curr_question_seq').val(curr_que_seq);
+				$('#form_curr_option_seq_selected').val($("input[name='answer']:checked").val());
+				$('#form_move_to_ques_seq').val(move_to_que_seq);
+				
+				document.submitForm.submit();
+				
+			}
+			
+			if(action!='Finish Exam'){								
+			
+				$.ajax({
+					url : "QuizAction",
+					method : "post",
+					async : false,
+					data : {
+						action : action,
+						quiz_id : quiz_id,
+						curr_question_id : curr_que_id,
+						curr_question_seq :curr_que_seq,
+						curr_option_seq_selected :$("input[name='answer']:checked").val(),
+						move_to_ques_seq : move_to_que_seq,
+					},
+					success : function(data) {												
+						if([[${session.sessionMaster.employeeModel==null}]]){
+							window.location.href=/*[[@{/SessionTimeOut}]]*/ '/SIAQ/SessionTimeOut'
+							
+						}else{
+	// 					document.getElementById("outerquestionDiv").style.display = "block";
+						$("#questionDiv").html(data);
+						}
+	
+	
+					},
+					error : function(e) {
+						alert("Error occured");
+						return;
+					}
+	
+				});
+			}else{
+				
+				var msg= "Do you wish to finish the quiz?";
+				
+				$.ajax({
+					url : "FetchQuizStat",
+					method : "post",
+					async : false,
+					data : {
+						quiz_id : quiz_id
+					},
+					success : function(data) {												
+						msg=data;
+	
+					},
+					error : function(e) {
+						alert("Error occured");
+						return;
+					}
+	
+				});
+				
+				if (confirm(msg) == true) {
+				
+				$('#form_quiz_id').val(quiz_id);
+				$('#form_action').val(action);
+				$('#form_curr_question_id').val(curr_que_id);
+				$('#form_curr_question_seq').val(curr_que_seq);
+				$('#form_curr_option_seq_selected').val($("input[name='answer']:checked").val());
+				$('#form_move_to_ques_seq').val(move_to_que_seq);
+				
+				document.submitForm.submit();
+				}
+				
+			}
+			
+			
+		}
+		function TimeUp(action){
+// 			alert("Time's Up. Quiz will be submitted now"); // To be commented	
+			$('#question_form_action').val($("input[name='answer']:checked").val());
+			$('#question_form_option_selected').val($("input[name='answer']:checked").val());		
+			document.questionForm.submit();
+			
+		}
+	</script>
+
+</body>
+
+
+</html>

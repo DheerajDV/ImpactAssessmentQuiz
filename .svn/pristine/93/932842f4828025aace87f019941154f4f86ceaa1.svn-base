@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+
+</head>
+<body>
+	<div th:fragment="loginHeader">
+		<header style="background-color: #06154e">
+			<div class="container-fluid">
+				<div class="row" style="text-align: center; width: inherit;">
+					<div class="col-1 text-left">
+						<img class="navbar-brand" th:src="@{/image/swadhyaya_logo.jpg}"
+							style="width: 122px;" />
+					</div>
+					<div class="col-10 text-center">
+						<h1
+							style="margin-top: 3px; font-family: 'Lobster'; width: inherit;">
+							<b style="font-family: 'Forum'; color: white;"> Swadhyaya
+								Impact Assessment Quiz </b>
+						</h1>
+					</div>
+					<div class="col-1 text-center"></div>
+
+				</div>
+			</div>
+		</header>
+	</div>
+</body>
+</html>
